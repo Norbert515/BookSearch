@@ -47,7 +47,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> _items = new List();
+  List<Book> _items = new List();
   TextEditingController _controller = new TextEditingController();
 
   final subject = new PublishSubject<String>();
@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _floatingClick() {
     setState(() {
-      _items.add(_controller.text);
+      //_items.add(_controller.text);
     });
   }
 
@@ -73,16 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
         .catchError(_onError)
         .asStream()
         .listen((e) => _isLoading = false);
-
-
-
-
   }
 
-
-
   void _onError(dynamic d) {
-
+    _isLoading = false;
   }
 
   void _clearList() {
@@ -91,9 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
   void _printBook(dynamic book) {
-    print(book["volumeInfo"]["title"]);
+    //print(book["volumeInfo"]["title"]);
+    print(book["volumeInfo"]["imageLinks"]["smallThumbnail"]);
+    print(book);
     setState(() {
-      _items.add(book["volumeInfo"]["title"]);
+      _items.add(new Book(book["volumeInfo"]["title"], book["volumeInfo"]["imageLinks"]["smallThumbnail"]));
     });
   }
 
@@ -135,7 +131,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   return new Card(
                     child: new Padding(
                         padding: new EdgeInsets.all(8.0),
-                        child: new Text(_items[index], maxLines: 10),
+                        child: new Row(
+                          children: <Widget>[
+                            _items[index].url != null? new Image.network(_items[index].url): new Container(),
+                            new Flexible(
+                                child: new Text(_items[index].title, maxLines: 10),
+                            ),
+                          ],
+                        )
                     )
                   );
                 },
@@ -150,5 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class Book {
+  String title, url;
+  Book(String title, String url) {
+    this.title = title;
+    this.url = url;
   }
 }

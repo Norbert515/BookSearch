@@ -9,11 +9,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Book search',
       theme: new ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: 'Book Search'),
     );
   }
 }
@@ -36,8 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isLoading = false;
 
   void _textChanged(String text) {
-    _isLoading = true;
-    print(text);
+    if(text.isEmpty) {
+      setState((){_isLoading = false;});
+      _clearList();
+      return;
+    }
+    setState((){_isLoading = true;});
     _clearList();
     http.get("https://www.googleapis.com/books/v1/volumes?q=$text")
         .then((response) => response.body)
@@ -46,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((list) => list.forEach(_printBook))
         .catchError(_onError)
         .asStream()
-        .listen((e) => _isLoading = false);
+        .listen((e) => setState((){_isLoading = false;}));
   }
 
   void _onError(dynamic d) {
@@ -67,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    subject.stream.debounce(new Duration(milliseconds: 200)).listen(_textChanged);
+    subject.stream.debounce(new Duration(milliseconds: 600)).listen(_textChanged);
   }
 
   @override
@@ -85,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: new InputDecoration(
                 hintText: 'Choose a book',
               ),
-              //onChanged: (string) => (_textChanged(string)),
               onChanged: (string) => (subject.add(string)),
               controller: _controller,
             ),

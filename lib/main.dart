@@ -29,7 +29,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Book> _items = new List();
-  TextEditingController _controller = new TextEditingController();
 
   final subject = new PublishSubject<String>();
 
@@ -47,14 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((response) => response.body)
         .then(JSON.decode)
         .then((map) => map["items"])
-        .then((list) => list.forEach(_printBook))
+        .then((list) => list.forEach(_addBook))
         .catchError(_onError)
         .asStream()
         .listen((e) => setState((){_isLoading = false;}));
   }
 
   void _onError(dynamic d) {
-    _isLoading = false;
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   void _clearList() {
@@ -62,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _items.clear();
     });
   }
-  void _printBook(dynamic book) {
+  void _addBook(dynamic book) {
     setState(() {
       _items.add(new Book(book["volumeInfo"]["title"], book["volumeInfo"]["imageLinks"]["smallThumbnail"]));
     });
@@ -90,7 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 hintText: 'Choose a book',
               ),
               onChanged: (string) => (subject.add(string)),
-              controller: _controller,
             ),
             _isLoading? new CircularProgressIndicator(): new Container(),
             new Expanded(

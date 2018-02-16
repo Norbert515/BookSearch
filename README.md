@@ -1,6 +1,6 @@
-# test_app
+# BookSearch
 
-A new Flutter project.
+A new Flutter project. Going through the basic of creating an app.
 
 ## Getting Started
 

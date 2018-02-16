@@ -47,10 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((response) => response.body)
         .then(JSON.decode)
         .then((map) => map["items"])
-        .then((list) => list.forEach(_addBook))
+        .then((list) {list.forEach(_addBook);})
         .catchError(_onError)
-        .asStream()
-        .listen((e) => setState((){_isLoading = false;}));
+        .then((e){setState((){_isLoading = false;});});
   }
 
   void _onError(dynamic d) {

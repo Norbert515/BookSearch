@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
 
@@ -65,11 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   void _addBook(dynamic book) {
     setState(() {
-      _items.add(new Book(
-          title: book["volumeInfo"]["title"],
-          url: book["volumeInfo"]["imageLinks"]["smallThumbnail"],
-          id: book["id"]
-      ));
+      _items.add(new Book(book["volumeInfo"]["title"], book["volumeInfo"]["imageLinks"]["smallThumbnail"]));
     });
   }
 
@@ -102,7 +97,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: new EdgeInsets.all(8.0),
                 itemCount: _items.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new BookCard(_items[index]);
+                  return new Card(
+                      child: new Padding(
+                          padding: new EdgeInsets.all(8.0),
+                          child: new Row(
+                            children: <Widget>[
+                              _items[index].url != null? new Image.network(_items[index].url): new Container(),
+                              new Flexible(
+                                child: new Text(_items[index].title, maxLines: 10),
+                              ),
+                            ],
+                          )
+                      )
+                  );
                 },
               ),
             ),
@@ -114,47 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Book {
-  String title, url, id;
-  Book({
-    @required this.title,
-    @required this.url,
-    @required this.id
-  });
-}
-
-class BookCard extends StatefulWidget {
-
-
-  BookCard(this.book);
-
-  final Book book;
-
-  @override
-  State<StatefulWidget> createState() => new BookCardState();
-
-}
-
-class BookCardState extends State<BookCard> {
-  @override
-  Widget build(BuildContext context) {
-    return new Card(
-        child: new Padding(
-            padding: new EdgeInsets.all(8.0),
-            child: new Row(
-              children: <Widget>[
-                widget.book.url != null?
-                new Hero(
-                  child: new Image.network(widget.book.url),
-                  tag: widget.book.id,
-                ):
-                new Container(),
-                new Flexible(
-                  child: new Text(widget.book.title, maxLines: 10),
-                ),
-              ],
-            )
-        )
-    );
+  String title, url;
+  Book(String title, String url) {
+    this.title = title;
+    this.url = url;
   }
-
 }

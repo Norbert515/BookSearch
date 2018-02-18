@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
+import 'package:test_app/book_notes.dart';
 import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
 
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: new MyHomePage(title: 'Book Search'),
+      routes: {
+        '/': (BuildContext context) => new MyHomePage(title: 'Book Search'),
+      },
     );
   }
 }
@@ -145,51 +148,59 @@ class BookCardState extends State<BookCard> {
 
   @override
   Widget build(BuildContext context) {
-    return new Card(
-        child: new Container(
-          height: 200.0,
-          child: new Padding(
-              padding: new EdgeInsets.all(8.0),
-              child: new Row(
-                children: <Widget>[
-                  widget.book.url != null?
-                  new Hero(
-                    child: new Image.network(widget.book.url),
-                    tag: widget.book.id,
-                  ):
-                  new Container(),
-                  new Expanded(
-                    child: new Stack(
-                      children: <Widget>[
-                        new Align(
-                            child: new Padding(
-                                child: new Text(widget.book.title, maxLines: 10),
-                                padding: new EdgeInsets.all(8.0),
-                            ),
-                            alignment: Alignment.center,
-                        ),
-                        new Align(
-                          child: new IconButton(
-                            icon: widget.book.starred? new Icon(Icons.star): new Icon(Icons.star_border),
-                            color: Colors.black,
-                            onPressed: (){
-                              setState(() {
-                                widget.book.starred = !widget.book.starred;
-                              });
-                              new BookDatabase().updateBookStarStatus(widget.book);
-                            },
+    return new GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(
+            new MaterialPageRoute(
+                builder: (BuildContext context) => new BookNotesPage(widget.book)
+            ));
+      },
+      child: new Card(
+          child: new Container(
+            height: 200.0,
+            child: new Padding(
+                padding: new EdgeInsets.all(8.0),
+                child: new Row(
+                  children: <Widget>[
+                    widget.book.url != null?
+                    new Hero(
+                      child: new Image.network(widget.book.url),
+                      tag: widget.book.id,
+                    ):
+                    new Container(),
+                    new Expanded(
+                      child: new Stack(
+                        children: <Widget>[
+                          new Align(
+                              child: new Padding(
+                                  child: new Text(widget.book.title, maxLines: 10),
+                                  padding: new EdgeInsets.all(8.0),
+                              ),
+                              alignment: Alignment.center,
                           ),
-                          alignment: Alignment.topRight,
-                        ),
+                          new Align(
+                            child: new IconButton(
+                              icon: widget.book.starred? new Icon(Icons.star): new Icon(Icons.star_border),
+                              color: Colors.black,
+                              onPressed: (){
+                                setState(() {
+                                  widget.book.starred = !widget.book.starred;
+                                });
+                                new BookDatabase().updateBookStarStatus(widget.book);
+                              },
+                            ),
+                            alignment: Alignment.topRight,
+                          ),
 
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
 
-                ],
-              )
-          ),
-        )
+                  ],
+                )
+            ),
+          )
+      ),
     );
   }
 

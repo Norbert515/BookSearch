@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:test_app/model/Book.dart';
 
 
-class BookNotes extends StatefulWidget  {
+class BookNotesPage extends StatefulWidget  {
 
-  BookNotes(this.book);
+  BookNotesPage(this.book);
 
 
   final Book book;
 
 
   @override
-  State<StatefulWidget> createState() => new _BookNotes();
+  State<StatefulWidget> createState() => new _BookNotesPageState();
 
 }
 
-class _BookNotes extends State<BookNotes> {
+class _BookNotesPageState extends State<BookNotesPage> {
 
 
   @override

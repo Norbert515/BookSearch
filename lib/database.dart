@@ -35,7 +35,7 @@ class BookDatabase {
   Future updateBookStarStatus(Book book) async {
     await db.inTransaction(() async {
       int id1 = await db.rawInsert(
-          'INSERT INTO $tableName(id, title, url, star) VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0})');
+          'INSERT OR REPLACE INTO $tableName(id, title, url, star) VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0})');
       print("inserted1: $id1");
     });
   }

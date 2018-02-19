@@ -23,22 +23,14 @@ class _BookNotesPageState extends State<BookNotesPage> {
 
   @override
   void initState() {
-    _textController = new TextEditingController();
-    new BookDatabase()
-        .getBookNotes(widget.book)
-        .then((notes){
-          setState((){
-            _textController.text = notes;
-          });
-        });
+    _textController = new TextEditingController(text: widget.book.notes);
 
   }
-
-
+  
   @override
   void dispose() {
     widget.book.notes = _textController.text;
-    new BookDatabase().updateBookStarStatusWithNotes(widget.book);
+    new BookDatabase().updateBook(widget.book);
     super.dispose();
   }
 

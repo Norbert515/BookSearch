@@ -125,7 +125,7 @@ class BookCard extends StatefulWidget {
 
   BookCard(this.book);
 
-  final Book book;
+  Book book;
 
   @override
   State<StatefulWidget> createState() => new BookCardState();
@@ -137,12 +137,13 @@ class BookCardState extends State<BookCard> {
 
   @override
   void initState() {
-    new BookDatabase().getBookStarStatus(widget.book)
-        .then((status){
+    new BookDatabase().getBook(widget.book)
+        .then((book){
           setState((){
-            widget.book.starred = status;
+            widget.book = book;
           });
       });
+
   }
 
 
@@ -188,7 +189,7 @@ class BookCardState extends State<BookCard> {
                                 setState(() {
                                   widget.book.starred = !widget.book.starred;
                                 });
-                                new BookDatabase().updateBookStarStatus(widget.book);
+                                new BookDatabase().updateBook(widget.book);
                               },
                             ),
                             alignment: Alignment.topRight,

@@ -17,32 +17,23 @@ class BookDatabase {
     return _bookDatabase;
   }
 
-  Future<bool> getBookStarStatus(Book book) async{
-    var result = await db.rawQuery('SELECT star FROM $tableName WHERE id = "${book.id}"');
-    if(result.length == 0)return false;
-    print(result[0]);
-    return result[0]["star"] == 1? true: false;
+
+  /**
+   * Returns a currently saved book, if it is not in the database returns the book of the input
+   */
+  Future<Book> getBook(Book book) async{
+    var result = await db.rawQuery('SELECT * FROM $tableName WHERE ${Book.db_id} = "${book.id}"');
+    if(result.length == 0)return book;
+    return new Book.fromMap(result[0]);
   }
 
-  Future updateBookStarStatus(Book book) async {
+
+  Future updateBook(Book book) async {
     await db.inTransaction(() async {
-      int id1 = await db.rawInsert(
-          'INSERT OR REPLACE INTO $tableName(id, title, url, star) VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0})');
-    });
-  }
-
-  Future<String> getBookNotes(Book book) async{
-    var result = await db.rawQuery('SELECT notes FROM $tableName WHERE id = "${book.id}"');
-    if(result.length == 0)return "";
-    return result[0]["notes"];
-  }
-
-
-  Future updateBookStarStatusWithNotes(Book book) async {
-    print(book);
-    await db.inTransaction(() async {
-      int id1 = await db.rawInsert(
-          'INSERT OR REPLACE INTO $tableName(id, title, url, star, notes) VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}")');
+      await db.rawInsert(
+          'INSERT OR REPLACE INTO '
+              '$tableName(${Book.db_id}, ${Book.db_title}, ${Book.db_url}, ${Book.db_star}, ${Book.db_notes})'
+              ' VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}")');
     });
   }
 
@@ -59,7 +50,13 @@ class BookDatabase {
         onCreate: (Database db, int version) async {
           // When creating the db, create the table
           await db.execute(
-              "CREATE TABLE $tableName (id STRING PRIMARY KEY, title TEXT, url TEXT, star BIT, notes TEXT)");
+              "CREATE TABLE $tableName ("
+                  "${Book.db_id} STRING PRIMARY KEY,"
+                  "${Book.db_title} TEXT,"
+                  "${Book.db_url} TEXT,"
+                  "${Book.db_star} BIT,"
+                  "${Book.db_notes} TEXT"
+                  ")");
         });
 
 

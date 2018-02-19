@@ -47,7 +47,6 @@ class _BookNotesPageState extends State<BookNotesPage> {
     return new Scaffold(
       appBar: new AppBar(title: const Text("Notes"),),
       body: new Container(
-        color: Colors.blue,
         child: new Padding(
           padding: new EdgeInsets.all(8.0),
           child: new Column(

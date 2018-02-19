@@ -32,6 +32,7 @@ class BookDatabase {
   }
 
 
+
   Future updateBookStarStatus(Book book) async {
     await db.inTransaction(() async {
       int id1 = await db.rawInsert(
@@ -39,6 +40,27 @@ class BookDatabase {
       print("inserted1: $id1");
     });
   }
+
+
+
+  Future<String> getBookNotes(Book book) async{
+    var result = await db.rawQuery('SELECT notes FROM $tableName WHERE id = "${book.id}"');
+    if(result.length == 0)return "";
+    print(result[0]);
+    return result[0]["notes"];
+  }
+
+
+  Future updateBookStarStatusWithNotes(Book book) async {
+    print(book);
+    await db.inTransaction(() async {
+      int id1 = await db.rawInsert(
+          'INSERT OR REPLACE INTO $tableName(id, title, url, star, notes) VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}")');
+      print("inserted1: $id1");
+    });
+  }
+
+
 
   BookDatabase._internal() {
     start();
@@ -56,8 +78,7 @@ class BookDatabase {
 
           // When creating the db, create the table
           await db.execute(
-              "CREATE TABLE $tableName (id STRING PRIMARY KEY, title TEXT, url TEXT, star BIT)");
-          print("Created table !!!!");
+              "CREATE TABLE $tableName (id STRING PRIMARY KEY, title TEXT, url TEXT, star BIT, notes TEXT)");
         });
 
 

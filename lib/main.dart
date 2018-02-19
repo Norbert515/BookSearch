@@ -6,6 +6,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:test_app/book_notes.dart';
 import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
+import 'package:test_app/utils/utils.dart';
 
 void main() => runApp(new MyApp());
 
@@ -151,8 +152,9 @@ class BookCardState extends State<BookCard> {
     return new GestureDetector(
       onTap: (){
         Navigator.of(context).push(
-            new MaterialPageRoute(
-                builder: (BuildContext context) => new BookNotesPage(widget.book)
+            new FadeRoute(
+              builder: (BuildContext context) => new BookNotesPage(widget.book),
+              settings: new RouteSettings(name: '/notes', isInitialRoute: false),
             ));
       },
       child: new Card(

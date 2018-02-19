@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
+import 'package:rxdart/rxdart.dart';
 
 
 class BookNotesPage extends StatefulWidget  {
@@ -21,18 +22,26 @@ class _BookNotesPageState extends State<BookNotesPage> {
 
   TextEditingController _textController;
 
-  @override
-  void initState() {
-    _textController = new TextEditingController(text: widget.book.notes);
+  final subject = new PublishSubject<String>();
 
-  }
-  
+
   @override
   void dispose() {
-    widget.book.notes = _textController.text;
-    new BookDatabase().updateBook(widget.book);
+    subject.close();
     super.dispose();
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = new TextEditingController(text: widget.book.notes);
+    subject.stream.debounce(new Duration(milliseconds: 600)).listen((text){
+      widget.book.notes = text;
+      new BookDatabase().updateBook(widget.book);
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {

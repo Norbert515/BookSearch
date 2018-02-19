@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool _isLoading = false;
 
+
   void _textChanged(String text) {
     if(text.isEmpty) {
       setState((){_isLoading = false;});
@@ -77,6 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
           id: book["id"]
       ));
     });
+  }
+
+  @override
+  void dispose() {
+    subject.close();
+    super.dispose();
   }
 
   @override
@@ -132,6 +139,7 @@ class BookCard extends StatefulWidget {
 
 }
 
+//TODO take out logic from bookCardState
 class BookCardState extends State<BookCard> {
 
 
@@ -145,8 +153,6 @@ class BookCardState extends State<BookCard> {
       });
 
   }
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class BookDatabase {
   static BookDatabase get() {
     return _bookDatabase;
   }
-  
+
   BookDatabase._internal();
 
 
@@ -40,7 +40,7 @@ class BookDatabase {
 
   }
 
-  /// Get a book by it's id, if there is not entry for that ID returns null.
+  /// Get a book by its id, if there is not entry for that ID, returns null.
   Future<Book> getBook(String id) async{
     var result = await db.rawQuery('SELECT * FROM $tableName WHERE ${Book.db_id} = "$id"');
     if(result.length == 0)return null;

@@ -90,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     subject.stream.debounce(new Duration(milliseconds: 600)).listen(_textChanged);
-    new BookDatabase();
   }
 
   @override
@@ -146,8 +145,9 @@ class BookCardState extends State<BookCard> {
 
   @override
   void initState() {
+    super.initState();
     bookState = widget.book;
-    new BookDatabase().getBook(widget.book.id)
+    BookDatabase.get().getBook(widget.book.id)
         .then((book){
           if (book == null) return;
           setState((){
@@ -198,7 +198,7 @@ class BookCardState extends State<BookCard> {
                                 setState(() {
                                   bookState.starred = !bookState.starred;
                                 });
-                                new BookDatabase().updateBook(bookState);
+                                BookDatabase.get().updateBook(bookState);
                               },
                             ),
                             alignment: Alignment.topRight,

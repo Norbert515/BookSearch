@@ -13,7 +13,7 @@ class BookDatabase {
 
   Database db;
 
-  factory BookDatabase() {
+  static BookDatabase get() {
     return _bookDatabase;
   }
 

@@ -36,12 +36,14 @@ class BookDatabase {
     });
   }
 
-  BookDatabase._internal() {
-    start();
+  BookDatabase._internal();
+
+
+  Future close() async {
+    return db.close();
   }
 
-
-  Future start() async {
+  Future init() async {
     // Get a location using path_provider
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "demo.db");

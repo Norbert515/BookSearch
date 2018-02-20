@@ -83,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     subject.close();
+    BookDatabase.get().close();
     super.dispose();
   }
 
@@ -90,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     subject.stream.debounce(new Duration(milliseconds: 600)).listen(_textChanged);
+    BookDatabase.get().init();
   }
 
   @override

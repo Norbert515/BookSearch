@@ -18,16 +18,15 @@ class BookDatabase {
   }
 
 
-  /**
-   * Returns a currently saved book, if it is not in the database returns the book of the input
-   */
-  Future<Book> getBook(Book book) async{
-    var result = await db.rawQuery('SELECT * FROM $tableName WHERE ${Book.db_id} = "${book.id}"');
-    if(result.length == 0)return book;
+  /// Get a book by it's id, if there is not entry for that ID returns null.
+  Future<Book> getBook(String id) async{
+    var result = await db.rawQuery('SELECT * FROM $tableName WHERE ${Book.db_id} = "$id"');
+    if(result.length == 0)return null;
     return new Book.fromMap(result[0]);
   }
 
 
+  /// Inserts or replaces the book.
   Future updateBook(Book book) async {
     await db.inTransaction(() async {
       await db.rawInsert(

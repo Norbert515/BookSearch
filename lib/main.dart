@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
-import 'package:test_app/book_notes.dart';
+import 'package:test_app/book_notes_page.dart';
 import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
 import 'package:test_app/utils/utils.dart';
@@ -132,23 +132,26 @@ class BookCard extends StatefulWidget {
 
   BookCard(this.book);
 
-  Book book;
+  final Book book;
 
   @override
   State<StatefulWidget> createState() => new BookCardState();
 
 }
 
-//TODO take out logic from bookCardState
 class BookCardState extends State<BookCard> {
+
+  Book bookState;
 
 
   @override
   void initState() {
-    new BookDatabase().getBook(widget.book)
+    bookState = widget.book;
+    new BookDatabase().getBook(widget.book.id)
         .then((book){
+          if (book == null) return;
           setState((){
-            widget.book = book;
+            bookState = book;
           });
       });
 
@@ -160,7 +163,7 @@ class BookCardState extends State<BookCard> {
       onTap: (){
         Navigator.of(context).push(
             new FadeRoute(
-              builder: (BuildContext context) => new BookNotesPage(widget.book),
+              builder: (BuildContext context) => new BookNotesPage(bookState),
               settings: new RouteSettings(name: '/notes', isInitialRoute: false),
             ));
       },
@@ -171,10 +174,10 @@ class BookCardState extends State<BookCard> {
                 padding: new EdgeInsets.all(8.0),
                 child: new Row(
                   children: <Widget>[
-                    widget.book.url != null?
+                    bookState.url != null?
                     new Hero(
-                      child: new Image.network(widget.book.url),
-                      tag: widget.book.id,
+                      child: new Image.network(bookState.url),
+                      tag: bookState.id,
                     ):
                     new Container(),
                     new Expanded(
@@ -182,20 +185,20 @@ class BookCardState extends State<BookCard> {
                         children: <Widget>[
                           new Align(
                               child: new Padding(
-                                  child: new Text(widget.book.title, maxLines: 10),
+                                  child: new Text(bookState.title, maxLines: 10),
                                   padding: new EdgeInsets.all(8.0),
                               ),
                               alignment: Alignment.center,
                           ),
                           new Align(
                             child: new IconButton(
-                              icon: widget.book.starred? new Icon(Icons.star): new Icon(Icons.star_border),
+                              icon: bookState.starred? new Icon(Icons.star): new Icon(Icons.star_border),
                               color: Colors.black,
                               onPressed: (){
                                 setState(() {
-                                  widget.book.starred = !widget.book.starred;
+                                  bookState.starred = !bookState.starred;
                                 });
-                                new BookDatabase().updateBook(widget.book);
+                                new BookDatabase().updateBook(bookState);
                               },
                             ),
                             alignment: Alignment.topRight,

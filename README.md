@@ -1,8 +1,8 @@
 # BookSearch
 
-A flutter medium series where I gradually a bookshelf app.
+A flutter medium series where I gradually build a bookshelf app.
 What's the app going to look like?
-- I don't know. But my idea was to have a well designed app to track book reading progress and share with friends. 
+- I don't know. But my idea was to have a well designed app to track book reading progress and to share it with friends. 
 
 
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/first.gif)

@@ -13,7 +13,7 @@ What's the app going to look like?
 
 # Code for the medium posts:
 
-## -Master contains the newest code
+## Master contains the code of the most recent post, "dev" contains, well currently developed code
 
 ## First Post "v1"-branch
 https://medium.com/@norbertkozsir/flutter-how-i-built-a-simple-app-in-under-an-hour-from-scratch-and-how-you-can-do-it-too-6d8e7fe6c91b

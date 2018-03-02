@@ -5,6 +5,8 @@ What's the app going to look like?
 - I don't know. But my idea was to have a well designed app to track book reading progress and share with friends. 
 
 
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/first.gif)
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/second.gif)
 
 
 

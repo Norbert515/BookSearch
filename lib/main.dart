@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/view/home_page.dart';
-import 'package:test_app/view/search_book_page.dart';
+import 'package:test_app/pages/home_page.dart';
+import 'package:test_app/pages/search_book_page.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       routes: {
-        '/': (BuildContext context) => new HomePage(),
-        '/search': (BuildContext context) => new SearchBookPage(),
+      //  '/': (BuildContext context) => new HomePage(),
+        '/': (BuildContext context) => new SearchBookPage(),
       },
     );
   }

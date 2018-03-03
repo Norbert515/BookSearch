@@ -3,10 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
-import 'package:test_app/view/book_notes_page.dart';
+import 'package:test_app/pages/book_notes_page.dart';
 import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
 import 'package:test_app/utils/utils.dart';
+import 'package:test_app/widgets/BookCard.dart';
 
 
 class SearchBookPage extends StatefulWidget {
@@ -98,7 +99,22 @@ class _SearchBookState extends State<SearchBookPage> {
                 padding: new EdgeInsets.all(8.0),
                 itemCount: _items.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new BookCard(_items[index]);
+                  return new BookCard(
+                    book: _items[index],
+                    onCardClick: (){
+                      Navigator.of(context).push(
+                          new FadeRoute(
+                            builder: (BuildContext context) => new BookNotesPage(_items[index]),
+                            settings: new RouteSettings(name: '/notes', isInitialRoute: false),
+                          ));
+                    },
+                    onStarClick: (){
+                      setState(() {
+                        _items[index].starred = !_items[index].starred;
+                      });
+                      BookDatabase.get().updateBook(_items[index]);
+                    },
+                  );
                 },
               ),
             ),
@@ -109,94 +125,3 @@ class _SearchBookState extends State<SearchBookPage> {
   }
 }
 
-class BookCard extends StatefulWidget {
-
-
-  BookCard(this.book);
-
-  final Book book;
-
-  @override
-  State<StatefulWidget> createState() => new BookCardState();
-
-}
-
-class BookCardState extends State<BookCard> {
-
-  Book bookState;
-
-
-  @override
-  void initState() {
-    super.initState();
-    bookState = widget.book;
-    BookDatabase.get().getBook(widget.book.id)
-        .then((book){
-      if (book == null) return;
-      setState((){
-        bookState = book;
-      });
-    });
-
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new GestureDetector(
-      onTap: (){
-        Navigator.of(context).push(
-            new FadeRoute(
-              builder: (BuildContext context) => new BookNotesPage(bookState),
-              settings: new RouteSettings(name: '/notes', isInitialRoute: false),
-            ));
-      },
-      child: new Card(
-          child: new Container(
-            height: 200.0,
-            child: new Padding(
-                padding: new EdgeInsets.all(8.0),
-                child: new Row(
-                  children: <Widget>[
-                    bookState.url != null?
-                    new Hero(
-                      child: new Image.network(bookState.url),
-                      tag: bookState.id,
-                    ):
-                    new Container(),
-                    new Expanded(
-                      child: new Stack(
-                        children: <Widget>[
-                          new Align(
-                            child: new Padding(
-                              child: new Text(bookState.title, maxLines: 10),
-                              padding: new EdgeInsets.all(8.0),
-                            ),
-                            alignment: Alignment.center,
-                          ),
-                          new Align(
-                            child: new IconButton(
-                              icon: bookState.starred? new Icon(Icons.star): new Icon(Icons.star_border),
-                              color: Colors.black,
-                              onPressed: (){
-                                setState(() {
-                                  bookState.starred = !bookState.starred;
-                                });
-                                BookDatabase.get().updateBook(bookState);
-                              },
-                            ),
-                            alignment: Alignment.topRight,
-                          ),
-
-                        ],
-                      ),
-                    ),
-
-                  ],
-                )
-            ),
-          )
-      ),
-    );
-  }
-
-}

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
-import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/pages/book_notes_page.dart';
@@ -33,13 +30,6 @@ class _SearchBookState extends State<SearchBookPage> {
     }
     setState((){_isLoading = true;});
     _clearList();
-  /*  http.get("https://www.googleapis.com/books/v1/volumes?q=$text")
-        .then((response) => response.body)
-        .then(JSON.decode)
-        .then((map) => map["items"])
-        .then((list) {list.forEach(_addBook);})
-        .catchError(_onError)
-        .then((e){setState((){_isLoading = false;});});*/
     Repository.get().getBooks(text)
     .then((books){
       setState(() {
@@ -49,24 +39,10 @@ class _SearchBookState extends State<SearchBookPage> {
     });
   }
 
-  void _onError(dynamic d) {
-    setState(() {
-      _isLoading = false;
-    });
-  }
 
   void _clearList() {
     setState(() {
       _items.clear();
-    });
-  }
-  void _addBook(dynamic book) {
-    setState(() {
-      _items.add(new Book(
-          title: book["volumeInfo"]["title"],
-          url: book["volumeInfo"]["imageLinks"]["smallThumbnail"],
-          id: book["id"]
-      ));
     });
   }
 

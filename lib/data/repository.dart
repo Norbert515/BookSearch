@@ -26,12 +26,18 @@ class Repository {
     await database.init();
   }
 
+  /// Fetches the books from the Google Books Api with the query parameter being input.
+  /// If a book also exists in the local storage (eg. a book with notes/ stars) that version of the book will be used instead
   Future<List<Book>> getBooks(String input) async{
     var books = [];
-    List<dynamic> list = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input")
-        .then((response) => response.body)
-        .then(JSON.decode)
-        .then((map) => map["items"]);
+     http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input");
+
+     //If there was an error return an empty list, error handling will be implemented later on
+     if(response.statusCode < 200 || response.statusCode >= 300) {
+       return books;
+     }
+     // Decode and go to the items part where the necessary book information is
+     List<dynamic> list = JSON.decode(response.body)['items'];
 
     for(dynamic jsonBook in list) {
       Book book = new Book(
@@ -46,11 +52,6 @@ class Repository {
       books.add(book);
     }
     return books;
-  }
-
-
-  Future<Book> getBook(String id) async{
-    return database.getBook(id);
   }
 
   Future updateBook(Book book) async {

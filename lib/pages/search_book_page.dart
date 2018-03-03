@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
+import 'package:test_app/data/repository.dart';
 import 'package:test_app/pages/book_notes_page.dart';
 import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
@@ -32,13 +33,20 @@ class _SearchBookState extends State<SearchBookPage> {
     }
     setState((){_isLoading = true;});
     _clearList();
-    http.get("https://www.googleapis.com/books/v1/volumes?q=$text")
+  /*  http.get("https://www.googleapis.com/books/v1/volumes?q=$text")
         .then((response) => response.body)
         .then(JSON.decode)
         .then((map) => map["items"])
         .then((list) {list.forEach(_addBook);})
         .catchError(_onError)
-        .then((e){setState((){_isLoading = false;});});
+        .then((e){setState((){_isLoading = false;});});*/
+    Repository.get().getBooks(text)
+    .then((books){
+      setState(() {
+        _isLoading = false;
+        _items = books;
+      });
+    });
   }
 
   void _onError(dynamic d) {
@@ -65,7 +73,7 @@ class _SearchBookState extends State<SearchBookPage> {
   @override
   void dispose() {
     subject.close();
-    BookDatabase.get().close();
+    Repository.get().close();
     super.dispose();
   }
 
@@ -73,7 +81,7 @@ class _SearchBookState extends State<SearchBookPage> {
   void initState() {
     super.initState();
     subject.stream.debounce(new Duration(milliseconds: 600)).listen(_textChanged);
-    BookDatabase.get().init();
+    Repository.get().init();
   }
 
   @override

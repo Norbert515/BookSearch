@@ -7,6 +7,20 @@ import 'package:test_app/model/Book.dart';
 import 'package:http/http.dart' as http;
 
 
+/// A class similar to http.Response but instead of a String describing the body
+/// it already contains the parsed Dart-Object
+class ParsedResponse<T> {
+  ParsedResponse(this.statusCode, this.body);
+  final int statusCode;
+  final T body;
+
+  bool isOk() {
+    return statusCode >= 200 && statusCode < 300;
+  }
+}
+
+
+final int NO_INTERNET = 404;
 
 class Repository {
 
@@ -22,19 +36,23 @@ class Repository {
     database = BookDatabase.get();
   }
 
-  Future init() async {
-    await database.init();
-  }
 
   /// Fetches the books from the Google Books Api with the query parameter being input.
   /// If a book also exists in the local storage (eg. a book with notes/ stars) that version of the book will be used instead
-  Future<List<Book>> getBooks(String input) async{
+  Future<ParsedResponse<List<Book>>> getBooks(String input) async{
     var books = [];
-     http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input");
+    //http request, catching error like no internet connection.
+    //If no internet is available for example response is 
+     http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input")
+         .catchError((resp) {});
+     
+     if(response == null) {
+       return new ParsedResponse(NO_INTERNET, books);
+     }
 
-     //If there was an error return an empty list, error handling will be implemented later on
+     //If there was an error return an empty list
      if(response.statusCode < 200 || response.statusCode >= 300) {
-       return books;
+       return new ParsedResponse(response.statusCode, books);
      }
      // Decode and go to the items part where the necessary book information is
      List<dynamic> list = JSON.decode(response.body)['items'];
@@ -51,7 +69,7 @@ class Repository {
       }
       books.add(book);
     }
-    return books;
+    return new ParsedResponse(response.statusCode, books);
   }
 
   Future updateBook(Book book) async {
@@ -66,6 +84,9 @@ class Repository {
 
 
 
+  Future<List<Book>> getFavoriteBooks() {
+    return database.getFavoriteBooks();
+  }
 
 
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/pages/book_notes_page.dart';
-import 'package:test_app/database.dart';
 import 'package:test_app/model/Book.dart';
 import 'package:test_app/utils/utils.dart';
 import 'package:test_app/widgets/BookCard.dart';
@@ -21,6 +20,8 @@ class _SearchBookState extends State<SearchBookPage> {
 
   bool _isLoading = false;
 
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+
 
   void _textChanged(String text) {
     if(text.isEmpty) {
@@ -34,7 +35,11 @@ class _SearchBookState extends State<SearchBookPage> {
     .then((books){
       setState(() {
         _isLoading = false;
-        _items = books;
+        if(books.isOk()) {
+          _items = books.body;
+        } else {
+          scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Something went wrong, check your internet connection")));
+        }
       });
     });
   }
@@ -49,7 +54,6 @@ class _SearchBookState extends State<SearchBookPage> {
   @override
   void dispose() {
     subject.close();
-    Repository.get().close();
     super.dispose();
   }
 
@@ -57,12 +61,12 @@ class _SearchBookState extends State<SearchBookPage> {
   void initState() {
     super.initState();
     subject.stream.debounce(new Duration(milliseconds: 600)).listen(_textChanged);
-    Repository.get().init();
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: scaffoldKey,
       appBar: new AppBar(
         title: new Text("Book Search"),
       ),
@@ -96,7 +100,7 @@ class _SearchBookState extends State<SearchBookPage> {
                       setState(() {
                         _items[index].starred = !_items[index].starred;
                       });
-                      BookDatabase.get().updateBook(_items[index]);
+                      Repository.get().updateBook(_items[index]);
                     },
                   );
                 },

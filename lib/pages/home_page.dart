@@ -21,13 +21,13 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search');},)
+          new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search');},),
+          new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/collection');},),
         ],
       ),
-      body: new Container(
-        alignment: Alignment.topCenter,
-        child: new Image.asset('assets/test_img.jpg'),
-      ),
+      body: new Center(
+        child: new Text("Main Page"),
+      )
     );
   }
 

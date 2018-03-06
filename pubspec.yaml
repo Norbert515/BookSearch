@@ -5,7 +5,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sqflite: '0.6.1'
+  sqflite: '0.8.2'
   path_provider: "^0.3.1"
 
 

@@ -40,22 +40,23 @@ class Repository {
   /// Fetches the books from the Google Books Api with the query parameter being input.
   /// If a book also exists in the local storage (eg. a book with notes/ stars) that version of the book will be used instead
   Future<ParsedResponse<List<Book>>> getBooks(String input) async{
-    var books = [];
     //http request, catching error like no internet connection.
     //If no internet is available for example response is 
      http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input")
          .catchError((resp) {});
      
      if(response == null) {
-       return new ParsedResponse(NO_INTERNET, books);
+       return new ParsedResponse(NO_INTERNET, []);
      }
 
      //If there was an error return an empty list
      if(response.statusCode < 200 || response.statusCode >= 300) {
-       return new ParsedResponse(response.statusCode, books);
+       return new ParsedResponse(response.statusCode, []);
      }
      // Decode and go to the items part where the necessary book information is
      List<dynamic> list = JSON.decode(response.body)['items'];
+
+     Map<String, Book> networkBooks = {};
 
     for(dynamic jsonBook in list) {
       Book book = new Book(
@@ -63,13 +64,16 @@ class Repository {
           url: jsonBook["volumeInfo"]["imageLinks"]["smallThumbnail"],
           id: jsonBook["id"]
       );
-      Book databaseBook = await database.getBook(book.id);
-      if(databaseBook != null) {
-        book = databaseBook;
-      }
-      books.add(book);
+
+      networkBooks[book.id] = book;
     }
-    return new ParsedResponse(response.statusCode, books);
+
+    List<Book> databaseBook = await database.getBooks([]..addAll(networkBooks.keys));
+    for(Book book in databaseBook) {
+      networkBooks[book.id] = book;
+    }
+
+    return new ParsedResponse(response.statusCode, []..addAll(networkBooks.values));
   }
 
   Future updateBook(Book book) async {

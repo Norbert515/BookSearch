@@ -35,10 +35,6 @@ class _CollectionPageState extends State<CollectionPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Collection"),

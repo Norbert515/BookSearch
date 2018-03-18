@@ -125,7 +125,7 @@ class StampClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = new Path();
-    
+
     int num = (size.width / holeRadii).round();
 
     double radius;

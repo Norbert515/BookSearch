@@ -33,9 +33,7 @@ flutter:
 
   assets:
     - assets/test_img.jpg
-    - assets/stamp_bg.png
-    - assets/stamp_with_transparent_corner.png
-    - assets/s.png
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg

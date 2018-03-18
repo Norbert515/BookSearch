@@ -5,6 +5,7 @@ import 'package:test_app/pages/book_notes_page.dart';
 import 'package:test_app/model/Book.dart';
 import 'package:test_app/utils/utils.dart';
 import 'package:test_app/widgets/BookCard.dart';
+import 'package:test_app/widgets/book_card_compact.dart';
 
 
 class SearchBookPage extends StatefulWidget {
@@ -87,7 +88,7 @@ class _SearchBookState extends State<SearchBookPage> {
                 padding: new EdgeInsets.all(8.0),
                 itemCount: _items.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new BookCard(
+                 /* return new BookCard(
                     book: _items[index],
                     onCardClick: (){
                       Navigator.of(context).push(
@@ -102,7 +103,8 @@ class _SearchBookState extends State<SearchBookPage> {
                       });
                       Repository.get().updateBook(_items[index]);
                     },
-                  );
+                  );*/
+                 return new BookCardCompact();
                 },
               ),
             ),

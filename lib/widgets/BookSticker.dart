@@ -32,7 +32,7 @@ class _BookStickerState extends State<BookSticker> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
 
-    var size = 90.0;
+    var size = 150.0;
 
     var card_width = 300.0 - size;
     var card_height = 380.0 - size;
@@ -41,31 +41,12 @@ class _BookStickerState extends State<BookSticker> with SingleTickerProviderStat
     var inner_height = 300.0 - size;
 
     return new Material(
-      elevation: 8.0,
+      elevation: 6.0,
       color: Colors.transparent,
       child: new SizedBox(
         width: card_width,
         height: card_height,
-        child: new Stack(
-          children: <Widget>[
-            new Image.asset("assets/stamp_bg.png", width: card_width, height: card_height,),
-            new Align(
-              alignment: Alignment.center,
-              child: new Container(
-                width: inner_width + 30.0,
-                height: inner_height + 30.0,
-               // color: new Color.fromARGB(255, 206, 145, 54),
-                color: Colors.black26,
-              ),
-            ),
-         //   new Align(alignment: Alignment.center,child: new Image.asset("assets/s.png", width: 250.0, height: 300.0,)),
-            new Align(
-                alignment: Alignment.center,
-                child: new Image.asset("assets/test_img.jpg", width: inner_width, height: inner_height, fit: BoxFit.cover,)
-            ),
-
-          ],
-        ),
+        child: _clipped(context, card_width, card_height),
       ),
     );
 
@@ -118,7 +99,74 @@ class _BookStickerState extends State<BookSticker> with SingleTickerProviderStat
     );
   }
 
+  Widget _clipped(BuildContext context, double card_width, double card_height) {
+    return new ClipPath(
+      clipper: new StampClipper(),
+      child: new Align(
+          alignment: Alignment.center,
+          child: new Image.asset("assets/test_img.jpg",
+            width: card_width,
+            height: card_height,
+            fit: BoxFit.cover,
+          )
+      ),
+    );
+  }
 
 
 
+}
+
+class StampClipper extends CustomClipper<Path> {
+
+
+  final holeRadii = 15.0;
+
+  @override
+  Path getClip(Size size) {
+    Path path = new Path();
+    
+    int num = (size.width / holeRadii).round();
+
+    double radius;
+    if(num % 2 == 0) {
+      num++;
+      radius = size.width / num;
+    }
+
+    for(int i = 0; i < num / 2 - 1; i++) {
+      path.relativeLineTo(radius, 0.0);
+      path.relativeArcToPoint(new Offset(radius, 0.0), radius: new Radius.circular(radius / 2), clockwise: false);
+    }
+    path.relativeLineTo(radius, 0.0);
+
+
+    int numVert = (size.height / radius).round();
+    for(int i = 0; i < numVert / 2 - 1; i++) {
+      path.relativeLineTo(0.0, radius);
+      path.relativeArcToPoint(new Offset(0.0, radius), radius: new Radius.circular(radius / 2), clockwise: false);
+    }
+    path.relativeLineTo(0.0, radius);
+
+
+    for(int i = 0; i < num / 2 - 1; i++) {
+      path.relativeLineTo(-radius, 0.0);
+      path.relativeArcToPoint(new Offset(-radius, 0.0), radius: new Radius.circular(radius / 2), clockwise: false);
+    }
+    path.relativeLineTo(-radius, 0.0);
+
+    for(int i = 0; i < numVert / 2 - 1; i++) {
+      path.relativeLineTo(0.0, -radius);
+      path.relativeArcToPoint(new Offset(0.0, -radius), radius: new Radius.circular(radius / 2), clockwise: false);
+    }
+    path.relativeLineTo(0.0, -radius);
+
+
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

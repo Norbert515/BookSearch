@@ -94,7 +94,7 @@ class BookDatabase {
       await db.rawInsert(
           'INSERT OR REPLACE INTO '
               '$tableName(${Book.db_id}, ${Book.db_title}, ${Book.db_url}, ${Book.db_star}, ${Book.db_notes}, ${Book.db_author}, ${Book.db_description}, ${Book.db_subtitle})'
-              ' VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}", "${book.author}", "${book.description}, "${book.subtitle}")');
+              ' VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}", "${book.author}", "${book.description}", "${book.subtitle}")');
     });
   }
 

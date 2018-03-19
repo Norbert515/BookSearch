@@ -41,8 +41,9 @@ class Repository {
   /// If a book also exists in the local storage (eg. a book with notes/ stars) that version of the book will be used instead
   Future<ParsedResponse<List<Book>>> getBooks(String input) async{
     //http request, catching error like no internet connection.
-    //If no internet is available for example response is 
-     http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input")
+    //If no internet is available for example response is
+    //TODO restricted language to english, feel free to remove that
+     http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes?q=$input&langRestrict=en")
          .catchError((resp) {});
      
      if(response == null) {

@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search');},),
-          new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/collection');},),
+          new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/stamp_collection');},),
         ],
       ),
       body: new Center(

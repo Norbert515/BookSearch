@@ -84,13 +84,12 @@ class _SearchBookState extends State<SearchBookPage> {
               onChanged: (string) => (subject.add(string)),
             ),
             _isLoading? new CircularProgressIndicator(): new Container(),
-          /*  new Expanded(
+            new Expanded(
               child: new ListView.builder(
                 padding: new EdgeInsets.all(8.0),
                 itemCount: _items.length,
-                scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                 /* return new BookCard(
+                  return new BookCard(
                     book: _items[index],
                     onCardClick: (){
                       Navigator.of(context).push(
@@ -105,16 +104,16 @@ class _SearchBookState extends State<SearchBookPage> {
                       });
                       Repository.get().updateBook(_items[index]);
                     },
-                  );*/
-                 return new BookCardMinimalistic(_items[index]);
+                  );
+               //  return new BookCardMinimalistic(_items[index]);
                 },
               ),
-            ),*/
-          new Expanded(
+            ),
+        /*  new Expanded(
             child: new GridView.builder(gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.65), itemBuilder: (BuildContext context, int index) {
               return new BookCardMinimalistic(_items[index]);
             }, itemCount: _items.length,),
-          )
+          )*/
           ],
         ),
       ),

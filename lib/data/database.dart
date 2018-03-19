@@ -42,7 +42,10 @@ class BookDatabase {
                   "${Book.db_title} TEXT,"
                   "${Book.db_url} TEXT,"
                   "${Book.db_star} BIT,"
-                  "${Book.db_notes} TEXT"
+                  "${Book.db_notes} TEXT,"
+                  "${Book.db_author} TEXT,"
+                  "${Book.db_description} TEXT,"
+                  "${Book.db_subtitle} TEXT"
                   ")");
         });
     didInit = true;
@@ -90,8 +93,8 @@ class BookDatabase {
     await db.inTransaction(() async {
       await db.rawInsert(
           'INSERT OR REPLACE INTO '
-              '$tableName(${Book.db_id}, ${Book.db_title}, ${Book.db_url}, ${Book.db_star}, ${Book.db_notes})'
-              ' VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}")');
+              '$tableName(${Book.db_id}, ${Book.db_title}, ${Book.db_url}, ${Book.db_star}, ${Book.db_notes}, ${Book.db_author}, ${Book.db_description}, ${Book.db_subtitle})'
+              ' VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}", "${book.author}", "${book.description}, "${book.subtitle}")');
     });
   }
 

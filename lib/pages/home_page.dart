@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: new Center(
-        child: new BookSticker(),
+        child: new BookSticker(""),
       )
     );
   }

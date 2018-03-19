@@ -6,6 +6,7 @@ import 'package:test_app/model/Book.dart';
 import 'package:test_app/utils/utils.dart';
 import 'package:test_app/widgets/BookCard.dart';
 import 'package:test_app/widgets/book_card_compact.dart';
+import 'package:test_app/widgets/book_card_minimalistic.dart';
 
 
 class SearchBookPage extends StatefulWidget {
@@ -83,10 +84,11 @@ class _SearchBookState extends State<SearchBookPage> {
               onChanged: (string) => (subject.add(string)),
             ),
             _isLoading? new CircularProgressIndicator(): new Container(),
-            new Expanded(
+          /*  new Expanded(
               child: new ListView.builder(
                 padding: new EdgeInsets.all(8.0),
                 itemCount: _items.length,
+                scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
                  /* return new BookCard(
                     book: _items[index],
@@ -104,10 +106,15 @@ class _SearchBookState extends State<SearchBookPage> {
                       Repository.get().updateBook(_items[index]);
                     },
                   );*/
-                 return new BookCardCompact();
+                 return new BookCardMinimalistic(_items[index]);
                 },
               ),
-            ),
+            ),*/
+          new Expanded(
+            child: new GridView.builder(gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.65), itemBuilder: (BuildContext context, int index) {
+              return new BookCardMinimalistic(_items[index]);
+            }, itemCount: _items.length,),
+          )
           ],
         ),
       ),

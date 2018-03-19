@@ -59,10 +59,27 @@ class Repository {
      Map<String, Book> networkBooks = {};
 
     for(dynamic jsonBook in list) {
+      Map volumeInfo = jsonBook["volumeInfo"];
+      String author = "No author";
+      if(volumeInfo.containsKey("authors")) {
+        author = volumeInfo["authors"][0];
+      }
+      String description = "No description";
+      if(volumeInfo.containsKey("description")) {
+        description = volumeInfo["description"];
+      }
+      String subtitle = "No subtitle";
+      if(volumeInfo.containsKey("subtitle")) {
+        subtitle = volumeInfo["subtitle"];
+      }
       Book book = new Book(
-          title: jsonBook["volumeInfo"]["title"],
-          url: jsonBook["volumeInfo"]["imageLinks"]["smallThumbnail"],
-          id: jsonBook["id"]
+        title: jsonBook["volumeInfo"]["title"],
+        url: jsonBook["volumeInfo"]["imageLinks"]["smallThumbnail"],
+        id: jsonBook["id"],
+        //only first author
+        author: author,
+        description: description,
+        subtitle: subtitle,
       );
 
       networkBooks[book.id] = book;

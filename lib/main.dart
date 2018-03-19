@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Book search',
       theme: new ThemeData(
-        primarySwatch: Colors.green,
+       // primarySwatch: Colors.deepOrangeAccent,
+        primaryColor: new Color(0xFF0F2533),
       ),
       routes: {
         '/': (BuildContext context) => new HomePage(),

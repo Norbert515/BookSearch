@@ -22,9 +22,12 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search');},),
+          new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search_new');},),
           new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/stamp_collection');},),
         ],
+        backgroundColor: Colors.white,
+        elevation: 1.0,
+        iconTheme: new IconThemeData(color: Colors.black),
       ),
       body: new Center(
         child: new BookSticker(""),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/model/Book.dart';
+import 'package:test_app/pages/abstract/stamp_collection_page_abstract.dart';
 import 'package:test_app/widgets/book_card_compact.dart';
 
 
@@ -11,24 +12,7 @@ class StampCollectionPage extends StatefulWidget {
 }
 
 
-class _StampCollectionPageState extends State<StampCollectionPage> {
-
-
-  List<Book> _items = new List();
-
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    Repository.get().getFavoriteBooks()
-        .then((books) {
-      setState(() {
-        _items = books;
-      });
-    });
-  }
+class _StampCollectionPageState extends StampCollectionPageAbstractState<StampCollectionPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +26,9 @@ class _StampCollectionPageState extends State<StampCollectionPage> {
       body: new Transform(
         transform: transform,
         child: new ListView.builder(itemBuilder: (BuildContext context, int index){
-          return new BookCardCompact(_items[index]);
+          return new BookCardCompact(items[index]);
         },
-        itemCount: _items.length,
+        itemCount: items.length,
         ),
       ),
     );

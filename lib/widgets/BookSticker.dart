@@ -46,7 +46,7 @@ class _BookStickerState extends State<BookSticker> with SingleTickerProviderStat
       child: new SizedBox(
         width: card_width,
         height: card_height,
-        child: _clippedV1(context, card_width, card_height),
+        child: _clippedNetwork(context, card_width, card_height),
       ),
     );
 
@@ -60,6 +60,23 @@ class _BookStickerState extends State<BookSticker> with SingleTickerProviderStat
         child: new Align(
             alignment: Alignment.topCenter,
             child: new Image.asset("assets/test_img.jpg",
+              width: card_width,
+              height: card_height,
+              fit: BoxFit.cover,
+            )
+        ),
+      ),
+    );
+  }
+
+  Widget _clippedNetwork(BuildContext context, double card_width, double card_height) {
+    return new ClipPath(
+      clipper: new StampClipper(),
+      child: new Container(
+        color: Colors.white,
+        child: new Align(
+            alignment: Alignment.topCenter,
+            child: new Image.network(widget.imageUrl,
               width: card_width,
               height: card_height,
               fit: BoxFit.cover,

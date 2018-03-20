@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/collection_page.dart';
+import 'package:test_app/pages/formal/stamp_collection_page_formal.dart';
 import 'package:test_app/pages/home_page.dart';
-import 'package:test_app/pages/search_book_page.dart';
-import 'package:test_app/pages/search_book_page_new.dart';
-import 'package:test_app/pages/stamp_collection_page.dart';
+import 'package:test_app/pages/material/search_book_page_material.dart';
+import 'package:test_app/pages/formal/search_book_page_formal.dart';
+import 'package:test_app/pages/material/stamp_collection_page_material.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,15 +14,17 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Book search',
       theme: new ThemeData(
-       // primarySwatch: Colors.deepOrangeAccent,
-        primaryColor: new Color(0xFF0F2533),
+        primarySwatch: Colors.green,
+        // primarySwatch: Colors.deepOrangeAccent,
+      //  primaryColor: new Color(0xFF0F2533),
       ),
       routes: {
         '/': (BuildContext context) => new HomePage(),
-        '/search': (BuildContext context) => new SearchBookPage(),
-        '/search_new': (BuildContext context) => new SearchBookPageNew(),
+        '/search_material': (BuildContext context) => new SearchBookPage(),
+        '/search_formal': (BuildContext context) => new SearchBookPageNew(),
         '/collection': (BuildContext context) => new CollectionPage(),
-        '/stamp_collection': (BuildContext context) => new StampCollectionPage(),
+        '/stamp_collection_material': (BuildContext context) => new StampCollectionPage(),
+        '/stamp_collection_formal': (BuildContext context) => new StampCollectionFormalPage(),
       },
     );
   }

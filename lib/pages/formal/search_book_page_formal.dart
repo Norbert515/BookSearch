@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:test_app/data/repository.dart';
+import 'package:test_app/pages/abstract/search_book_page_abstract.dart';
 import 'package:test_app/pages/book_notes_page.dart';
 import 'package:test_app/model/Book.dart';
 import 'package:test_app/utils/utils.dart';
@@ -15,55 +16,7 @@ class SearchBookPageNew extends StatefulWidget {
   _SearchBookStateNew createState() => new _SearchBookStateNew();
 }
 
-class _SearchBookStateNew extends State<SearchBookPageNew> {
-  List<Book> _items = new List();
-
-  final subject = new PublishSubject<String>();
-
-  bool _isLoading = false;
-
-  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
-
-
-  void _textChanged(String text) {
-    if(text.isEmpty) {
-      setState((){_isLoading = false;});
-      _clearList();
-      return;
-    }
-    setState((){_isLoading = true;});
-    _clearList();
-    Repository.get().getBooks(text)
-    .then((books){
-      setState(() {
-        _isLoading = false;
-        if(books.isOk()) {
-          _items = books.body;
-        } else {
-          scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Something went wrong, check your internet connection")));
-        }
-      });
-    });
-  }
-
-
-  void _clearList() {
-    setState(() {
-      _items.clear();
-    });
-  }
-
-  @override
-  void dispose() {
-    subject.close();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    subject.stream.debounce(new Duration(milliseconds: 600)).listen(_textChanged);
-  }
+class _SearchBookStateNew extends AbstractSearchBookState<SearchBookPageNew> {
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +41,9 @@ class _SearchBookStateNew extends State<SearchBookPageNew> {
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  new SizedBox(height: 8.0,),
                   new Text("Search for Books", style: textStyle,),
+                  new SizedBox(height: 16.0),
                   new Card(
                       elevation: 4.0,
                       child: new Padding(
@@ -108,11 +63,11 @@ class _SearchBookStateNew extends State<SearchBookPageNew> {
               ),
             ),
           ),
-          _isLoading? new SliverToBoxAdapter(child: new Center(child: new CircularProgressIndicator()),): new SliverToBoxAdapter(),
+          isLoading? new SliverToBoxAdapter(child: new Center(child: new CircularProgressIndicator()),): new SliverToBoxAdapter(),
           new SliverList(delegate: new SliverChildBuilderDelegate((BuildContext context, int index){
-            return new BookCardCompact(_items[index]);
+            return new BookCardCompact(items[index]);
           },
-          childCount: _items.length)
+          childCount: items.length)
           )
         ],
       ),

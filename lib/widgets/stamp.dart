@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 
-class BookSticker extends StatefulWidget {
+class Stamp extends StatefulWidget {
 
 
-  BookSticker(this.imageUrl);
+  Stamp(this.imageUrl);
 
   final bool withStartAnimation = false;
   final String imageUrl;
 
   @override
-  State<StatefulWidget> createState() => new _BookStickerState();
+  State<StatefulWidget> createState() => new _StampState();
 
 }
 
 
-class _BookStickerState extends State<BookSticker> with SingleTickerProviderStateMixin{
+class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 
   AnimationController animationController;
   Animation animation;
@@ -46,7 +46,7 @@ class _BookStickerState extends State<BookSticker> with SingleTickerProviderStat
       child: new SizedBox(
         width: card_width,
         height: card_height,
-        child: _clippedNetwork(context, card_width, card_height),
+        child: _clippedV1(context, card_width, card_height),
       ),
     );
 
@@ -163,5 +163,7 @@ class StampClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return holeRadii != holeRadii;
+  }
 }

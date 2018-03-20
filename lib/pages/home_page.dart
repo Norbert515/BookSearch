@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/widgets/BookSticker.dart';
+import 'package:test_app/widgets/stamp.dart';
 
 
 
@@ -34,16 +34,21 @@ class _HomePageState extends State<HomePage> {
         iconTheme: new IconThemeData(color: Colors.black),
       ),
       body: new Center(
-        //child: new BookSticker(""),
-        child: new Switch(value: interfaceType != "formal", onChanged: (bool){
-          setState((){
-            if(bool) {
-              interfaceType = "material";
-            } else {
-              interfaceType = "formal";
-            }
-          });
-        }),
+        child: new Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new Stamp(""),
+            new Switch(value: interfaceType != "formal", onChanged: (bool){
+              setState((){
+                if(bool) {
+                  interfaceType = "material";
+                } else {
+                  interfaceType = "formal";
+                }
+              });
+            }),
+          ],
+        ),
       )
     );
   }

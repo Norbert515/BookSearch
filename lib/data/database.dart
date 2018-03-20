@@ -87,6 +87,7 @@ class BookDatabase {
   }
 
 
+  //TODO escape not allowed characters eg. ' " '
   /// Inserts or replaces the book.
   Future updateBook(Book book) async {
     var db = await _getDb();

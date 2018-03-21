@@ -32,19 +32,17 @@ class _StampCollectionPageFormalState extends StampCollectionPageAbstractState<S
       body = new Center(child: new Text("You have no collection yet"));
     } else {
       body = new ListView.builder(itemBuilder: (BuildContext context, int index){
-        return new Stamp(items[index].url);
+        return new Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Stamp(items[index].url),
+        );
       },
         itemCount: items.length,
+        scrollDirection: Axis.horizontal,
       );
     }
-/*
-    body = new ListView(
-      children: <Widget>[
-        new Stamp(items[0].url),
-        new Stamp(items[0].url),
-        new Stamp(items[0].url),
-      ],
-    );*/
+
+
 
     return new Scaffold(
       appBar: new AppBar(

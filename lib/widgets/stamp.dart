@@ -40,13 +40,23 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
     var card_width = 300.0 - size;
     var card_height = 380.0 - size;
 
-    return new Material(
-      elevation: 6.0,
-      color: Colors.transparent,
-      child: new SizedBox(
-        width: card_width,
-        height: card_height,
-        child: _clippedV1(context, card_width, card_height),
+    return new Container(
+      child: new Center(
+        child: new SizedBox(
+          width: card_width,
+          height: card_height,
+          child: new Material(
+            elevation: 8.0,
+            color: Colors.transparent,
+            child: new Center(
+              child: new SizedBox(
+                width: card_width,
+                height: card_height,
+                child: _clippedNetwork(context, card_width, card_height),
+              ),
+            ),
+          ),
+        ),
       ),
     );
 
@@ -55,16 +65,10 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
   Widget _clippedV1(BuildContext context, double card_width, double card_height) {
     return new ClipPath(
       clipper: new StampClipper(),
-      child: new Container(
-        color: Colors.white,
-        child: new Align(
-            alignment: Alignment.topCenter,
-            child: new Image.asset("assets/test_img.jpg",
-              width: card_width,
-              height: card_height,
-              fit: BoxFit.cover,
-            )
-        ),
+      child: new Image.asset("assets/test_img.jpg",
+        width: card_width,
+        height: card_height,
+        fit: BoxFit.cover,
       ),
     );
   }

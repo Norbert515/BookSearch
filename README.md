@@ -1,8 +1,19 @@
 # BookSearch
 
 A flutter medium series where I gradually build a bookshelf app.
-What's the app going to look like?
-- I don't know. But my idea was to have a well designed app to track book reading progress and to share it with friends. 
+
+## If you are looking for the code of a post, I created a branch which contains the code of the post. More information below.
+
+## What's the app going to be?
+
+The app will let you collect Stamps of your already read book. Gradually building up your stamp collection while reading your favorite books!
+
+## Is there a way to make this even cooler?
+
+Great that you ask! Yes there is!
+To showcase a vast amout of possibilities I will implement different UIs for the app, to top it all of, you as a user will be able to switch UI while being in the app.
+
+### Sounds cool? Leave a star so others can also find this project!
 
 
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/first.gif)

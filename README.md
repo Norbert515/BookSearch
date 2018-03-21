@@ -6,7 +6,7 @@ A flutter medium series where I gradually build a bookshelf app.
 
 ## What's the app going to be?
 
-The app will let you collect Stamps of your already read book. Gradually building up your stamp collection while reading your favorite books!
+The app will let you collect Stamps for each book you read. Gradually building up your stamp collection while reading your favorite masterpieces!
 
 ## Is there a way to make this even cooler?
 
@@ -16,6 +16,7 @@ To showcase a vast amout of possibilities I will implement different UIs for the
 ### Sounds cool? Leave a star so others can also find this project!
 
 
+### Old gifs
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/first.gif)
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/second.gif)
 

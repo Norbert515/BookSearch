@@ -42,6 +42,10 @@ class _StampCollectionPageFormalState extends StampCollectionPageAbstractState<S
       );
     }
 
+    body = new Container(
+      child: body,
+      color: new Color(0xFFF4EAD7),
+    );
 
 
     return new Scaffold(

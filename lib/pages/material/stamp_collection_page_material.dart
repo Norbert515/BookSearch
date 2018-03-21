@@ -23,13 +23,10 @@ class _StampCollectionPageState extends StampCollectionPageAbstractState<StampCo
       appBar: new AppBar(
         title: new Text("Stamp Collection"),
       ),
-      body: new Transform(
-        transform: transform,
-        child: new ListView.builder(itemBuilder: (BuildContext context, int index){
-          return new BookCardCompact(items[index]);
-        },
-        itemCount: items.length,
-        ),
+      body: new ListView.builder(itemBuilder: (BuildContext context, int index){
+        return new BookCardCompact(items[index]);
+      },
+      itemCount: items.length,
       ),
     );
   }

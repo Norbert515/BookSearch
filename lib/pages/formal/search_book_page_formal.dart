@@ -4,6 +4,7 @@ import 'package:test_app/data/repository.dart';
 import 'package:test_app/pages/abstract/search_book_page_abstract.dart';
 import 'package:test_app/pages/book_notes_page.dart';
 import 'package:test_app/model/Book.dart';
+import 'package:test_app/pages/formal/book_details_page_formal.dart';
 import 'package:test_app/utils/utils.dart';
 import 'package:test_app/widgets/BookCard.dart';
 import 'package:test_app/widgets/book_card_compact.dart';
@@ -68,7 +69,13 @@ class _SearchBookStateNew extends AbstractSearchBookState<SearchBookPageNew> {
           ),
           isLoading? new SliverToBoxAdapter(child: new Center(child: new CircularProgressIndicator()),): new SliverToBoxAdapter(),
           new SliverList(delegate: new SliverChildBuilderDelegate((BuildContext context, int index){
-            return new BookCardCompact(items[index]);
+            return new BookCardCompact(items[index], onClick: (){
+              Navigator.of(context).push(
+                  new FadeRoute(
+                    builder: (BuildContext context) => new BookDetailsPageFormal(items[index]),
+                    settings: new RouteSettings(name: '/book_detais_formal', isInitialRoute: false),
+                  ));
+            },);
           },
           childCount: items.length)
           )

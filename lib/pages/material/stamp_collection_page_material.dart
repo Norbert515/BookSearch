@@ -24,7 +24,7 @@ class _StampCollectionPageState extends StampCollectionPageAbstractState<StampCo
         title: new Text("Stamp Collection"),
       ),
       body: new ListView.builder(itemBuilder: (BuildContext context, int index){
-        return new BookCardCompact(items[index]);
+        return new BookCardCompact(items[index], onClick: (){},);
       },
       itemCount: items.length,
       ),

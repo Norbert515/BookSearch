@@ -77,8 +77,8 @@ class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetai
                         });
                         Repository.get().updateBook(widget.book);
                       },
-                      iconData: Icons.add,
-                      text: "Mark as read",
+                      iconData: widget.book.starred? Icons.remove : Icons.add,
+                      text: widget.book.starred? "Remove"  :"Mark as read",
                       selected: widget.book.starred,
                     ),
                   ),

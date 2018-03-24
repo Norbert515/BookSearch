@@ -16,45 +16,36 @@ class BookCardCompact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
-      onTap: onClick,
-      child: new Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: new Column(
-          children: <Widget>[
-            new Row(
-              children: <Widget>[
-                new Hero(child: new Image.network(book.url, height: 150.0, width: 100.0,), tag: book.id,),
-                new Expanded(
-                  child: new Padding(
-                    padding: const EdgeInsets.only(top : 8.0, left: 24.0),
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        new Text(_short(book.title, 25), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0),),
-                        new SizedBox(height: 4.0,),
-                        new Text(book.author),
-                        new SizedBox(height: 8.0,),
-                        new Text(_short(book.subtitle, 30)),
-                      //  new Divider(height: 16.0, color: Colors.black),
-                      //  new Divider(color: Colors.black,),
-                        /*new Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            new SizedBox(height: 24.0, width: 24.0, child: new IconButton(icon: new Icon(Icons.star_border), onPressed: (){}, padding: const EdgeInsets.all(0.0), )),
-                            new SizedBox(height: 24.0, width: 24.0, child: new IconButton(icon: new Icon(Icons.star_border), onPressed: (){}, padding: const EdgeInsets.all(0.0), )),
-                            new SizedBox(height: 24.0, width: 24.0, child: new IconButton(icon: new Icon(Icons.star_border), onPressed: (){}, padding: const EdgeInsets.all(0.0), )),
-                            new SizedBox(height: 24.0, width: 24.0, child: new IconButton(icon: new Icon(Icons.star_border), onPressed: (){}, padding: const EdgeInsets.all(0.0), )),
-                            new SizedBox(height: 24.0, width: 24.0, child: new IconButton(icon: new Icon(Icons.star_border), onPressed: (){}, padding: const EdgeInsets.all(0.0), )),
-                          ],
-                        )*/
-                      ],
+      onTap : onClick,
+      child: new Container(
+        child: new Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: new Column(
+            children: <Widget>[
+              new Row(
+                children: <Widget>[
+                  new Hero(child: new Image.network(book.url, height: 150.0, width: 100.0,), tag: book.id,),
+                  new Expanded(
+                    child: new Padding(
+                      padding: const EdgeInsets.only(top : 8.0, left: 24.0),
+                      child: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          new Text(_short(book.title, 35), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0),),
+                          new SizedBox(height: 4.0,),
+                          new Text(book.author),
+                       //   new SizedBox(height: 8.0,),
+                      //    new Text(_short(book.subtitle, 30)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            new Divider(color: Colors.black38, indent: 128.0,),
-          ],
+                  new SizedBox(width: 16.0,)
+                ],
+              ),
+              new Divider(color: Colors.black38, indent: 128.0,),
+            ],
+          ),
         ),
       ),
     );

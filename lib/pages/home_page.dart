@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         child: new Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Stamp(""),
+           // new Stamp(""),
             new Switch(value: interfaceType != "formal", onChanged: (bool){
               setState((){
                 if(bool) {

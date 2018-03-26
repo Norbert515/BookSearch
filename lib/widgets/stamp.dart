@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 class Stamp extends StatefulWidget {
 
 
-  Stamp(this.imageUrl);
+  Stamp(this.imageUrl, {this.width = 150.0});
 
   final bool withStartAnimation = false;
   final String imageUrl;
+
+  final double width;
+
+  final double aspectRatio = 1.5333333;
+
+  final double relativeHoleRadius = 1.0;
 
   @override
   State<StatefulWidget> createState() => new _StampState();
@@ -35,25 +41,23 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
 
-    var size = 150.0;
 
-    var card_width = 300.0 - size;
-    var card_height = 380.0 - size;
+   // var card_width = 300.0 - widget.size;
+   // var card_height = 380.0 - widget.size;
+    var width  = widget.width;
+    var height = widget.width * widget.aspectRatio;
+
+    var holeRadius = widget.relativeHoleRadius * (width / 10.0);
 
     return new Container(
       child: new Center(
-        child: new SizedBox(
-          width: card_width,
-          height: card_height,
+        child: new ConstrainedBox(
+          constraints: new BoxConstraints.tight(new Size(width, height)),
           child: new Material(
             elevation: 8.0,
             color: Colors.transparent,
             child: new Center(
-              child: new SizedBox(
-                width: card_width,
-                height: card_height,
-                child: _clippedNetwork(context, card_width, card_height),
-              ),
+              child: _clippedNetwork(context, width, height, holeRadius),
             ),
           ),
         ),
@@ -73,9 +77,9 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
     );
   }
 
-  Widget _clippedNetwork(BuildContext context, double card_width, double card_height) {
+  Widget _clippedNetwork(BuildContext context, double card_width, double card_height, double holeRadius) {
     return new ClipPath(
-      clipper: new StampClipper(),
+      clipper: new StampClipper(holeRadii: holeRadius),
       child: new Container(
         color: Colors.white,
         child: new Align(
@@ -86,6 +90,20 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
               fit: BoxFit.cover,
             )
         ),
+      ),
+    );
+  }
+
+  Widget _clippedNetwork2(BuildContext context, double card_width, double card_height) {
+    return new Container(
+      color: Colors.white,
+      child: new Align(
+          alignment: Alignment.topCenter,
+          child: new Image.network(widget.imageUrl,
+            width: card_width,
+            height: card_height,
+            fit: BoxFit.cover,
+          )
       ),
     );
   }
@@ -119,7 +137,10 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 class StampClipper extends CustomClipper<Path> {
 
 
-  final holeRadii = 15.0;
+  StampClipper({this.holeRadii = 15.0});
+
+
+  final holeRadii;
 
   @override
   Path getClip(Size size) {

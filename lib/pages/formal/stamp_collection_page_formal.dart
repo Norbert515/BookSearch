@@ -42,15 +42,24 @@ class _StampCollectionPageFormalState extends StampCollectionPageAbstractState<S
       );
     }
 
+
+    body = new GridView.extent(
+      maxCrossAxisExtent: 150.0,
+      mainAxisSpacing: 20.0,
+      children: items.map((Book book)=> new Stamp(book.url, width: 90.0,)).toList(),
+
+    );
+
     body = new Container(
+      padding: const EdgeInsets.all(16.0),
       child: body,
-      color: new Color(0xFFF4EAD7),
+      color: new Color(0xFFFFFFF0),
     );
 
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Stamp Collection"),
+        title: new Text("Stamp Collection", style: const TextStyle(color: Colors.black),),
         backgroundColor: Colors.white,
         elevation: 1.0,
         iconTheme: new IconThemeData(color: Colors.black),

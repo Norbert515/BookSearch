@@ -47,9 +47,9 @@ class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetai
                 ),
               ),
               new SizedBox(height: 16.0,),
-              new Text(widget.book.title, style: const TextStyle(fontSize: 24.0, fontFamily: "Butler"),),
+              new Text(widget.book.title, style: const TextStyle(fontSize: 24.0, fontFamily: "CrimsonText"),),
               new SizedBox(height: 8.0,),
-              new Text("${widget.book.author} - Sience Ficition", style: const TextStyle(fontSize: 16.0, fontFamily: "Butler", fontWeight: FontWeight.w200),),
+              new Text("${widget.book.author} - Sience Ficition", style: const TextStyle(fontSize: 16.0, fontFamily: "CrimsonText", fontWeight: FontWeight.w400),),
               new Divider(height: 32.0, color: Colors.black38,),
               new Row(
                 children: <Widget>[
@@ -85,7 +85,7 @@ class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetai
                 ],
               ),
               new Divider(height: 32.0, color: Colors.black38,),
-              new Text("Description", style: const TextStyle(fontSize: 20.0, fontFamily: "Butler"),),
+              new Text("Description", style: const TextStyle(fontSize: 20.0, fontFamily: "CrimsonText"),),
               new SizedBox(height: 8.0,),
               new Text(widget.book.description, style: const TextStyle(fontSize: 16.0),),
             ],
@@ -112,7 +112,7 @@ class IconButtonText extends StatelessWidget {
 
   bool selected = false;
 
-  final Color selectedColor = new Color(0xff8ca5e4);
+  final Color selectedColor = new Color(0xff283593);
 
   @override
   Widget build(BuildContext context) {

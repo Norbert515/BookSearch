@@ -69,3 +69,6 @@ flutter:
     - family: Butler
       fonts:
       - asset: assets/butler/Butler_Bold.otf
+    - family: CrimsonText
+      fonts:
+      - asset: assets/crimsonText/CrimsonText-Regular.ttf

@@ -53,7 +53,7 @@ class _StampCollectionPageFormalState extends StampCollectionPageAbstractState<S
     body = new Container(
       padding: const EdgeInsets.all(16.0),
       child: body,
-      color: new Color(0xFFFFFFF0),
+      color: new Color(0xFFFFF8E1),
     );
 
 

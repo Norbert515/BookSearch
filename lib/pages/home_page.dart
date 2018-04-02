@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/data/repository.dart';
+import 'package:test_app/model/Book.dart';
 import 'package:test_app/widgets/collection_preview.dart';
 import 'package:test_app/widgets/stamp.dart';
 
@@ -34,28 +36,42 @@ class _HomePageState extends State<HomePage> {
         elevation: 1.0,
         iconTheme: new IconThemeData(color: Colors.black),
       ),
-      body: new Column(
-        mainAxisSize: MainAxisSize.min,
+      body: new ListView(
+
         children: <Widget>[
+          new FutureBuilder<List<Book>>(
+            future: Repository.get().getFavoriteBooks(),
+            builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+              if(snapshot.data == null) return new Container();
+              return new CollectionPreview(
+                //TODO redundant, image url already fetched
+                bookIds: snapshot.data.map((book)=>book.id).toList(),
+                color: new Color(0xff8FC0A9),
+                title: "My Collection",
+              );
+            },
+          ),
           new CollectionPreview(
             bookIds: ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"],
             color: new Color(0xff4F518C),
             title: "Biographies",
           ),
           new CollectionPreview(
-            bookIds: ["GTpOAQAAMAAJ","eUmdAAAAMAAJ","GuE0AQAAMAAJ"],
-            color: Colors.blue,
-            title: "Stuff",
+            bookIds: ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"],
+            color: new Color(0xff4F518C),
+            title: "Biographies",
           ),
-          new Switch(value: interfaceType != "formal", onChanged: (bool){
-            setState((){
-              if(bool) {
-                interfaceType = "material";
-              } else {
-                interfaceType = "formal";
-              }
-            });
-          }),
+          new Center(
+            child: new Switch(value: interfaceType != "formal", onChanged: (bool){
+              setState((){
+                if(bool) {
+                  interfaceType = "material";
+                } else {
+                  interfaceType = "formal";
+                }
+              });
+            }),
+          ),
         ],
       )
     );

@@ -67,11 +67,16 @@ class _CollectionPreviewState extends State<CollectionPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Text(widget.title, style: textStyle,),
-            new Row(
-              children: books.map((book)=>new Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: new Stamp(book.url, width: 100.0,),
-              )).toList()),
+            new SizedBox(
+              height: 200.0,
+              child: new ListView(
+                scrollDirection: Axis.horizontal,
+                children: books.map((book)=>new Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: new Stamp(book.url, width: 100.0,),
+                )).toList()
+              ),
+            ),
           ],
         )
       ),

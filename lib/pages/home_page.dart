@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/widgets/collection_preview.dart';
 import 'package:test_app/widgets/stamp.dart';
 
 
@@ -33,22 +34,29 @@ class _HomePageState extends State<HomePage> {
         elevation: 1.0,
         iconTheme: new IconThemeData(color: Colors.black),
       ),
-      body: new Center(
-        child: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-           // new Stamp(""),
-            new Switch(value: interfaceType != "formal", onChanged: (bool){
-              setState((){
-                if(bool) {
-                  interfaceType = "material";
-                } else {
-                  interfaceType = "formal";
-                }
-              });
-            }),
-          ],
-        ),
+      body: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          new CollectionPreview(
+            bookIds: ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"],
+            color: new Color(0xff4F518C),
+            title: "Biographies",
+          ),
+          new CollectionPreview(
+            bookIds: ["GTpOAQAAMAAJ","eUmdAAAAMAAJ","GuE0AQAAMAAJ"],
+            color: Colors.blue,
+            title: "Stuff",
+          ),
+          new Switch(value: interfaceType != "formal", onChanged: (bool){
+            setState((){
+              if(bool) {
+                interfaceType = "material";
+              } else {
+                interfaceType = "formal";
+              }
+            });
+          }),
+        ],
       )
     );
   }

@@ -94,6 +94,45 @@ class Repository {
     return new ParsedResponse(response.statusCode, []..addAll(networkBooks.values));
   }
 
+  Future<ParsedResponse<Book>> getBook(String id) async {
+    http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes/$id")
+        .catchError((resp) {});
+    if(response == null) {
+      return new ParsedResponse(NO_INTERNET, null);
+    }
+
+    //If there was an error return null
+    if(response.statusCode < 200 || response.statusCode >= 300) {
+      return new ParsedResponse(response.statusCode, null);
+    }
+    dynamic jsonBook = JSON.decode(response.body);
+
+    Map volumeInfo = jsonBook["volumeInfo"];
+    String author = "No author";
+    if(volumeInfo.containsKey("authors")) {
+      author = volumeInfo["authors"][0];
+    }
+    String description = "No description";
+    if(volumeInfo.containsKey("description")) {
+      description = volumeInfo["description"];
+    }
+    String subtitle = "No subtitle";
+    if(volumeInfo.containsKey("subtitle")) {
+      subtitle = volumeInfo["subtitle"];
+    }
+    Book book = new Book(
+      title: jsonBook["volumeInfo"]["title"],
+      url: jsonBook["volumeInfo"]["imageLinks"]["smallThumbnail"],
+      id: jsonBook["id"],
+      //only first author
+      author: author,
+      description: description,
+      subtitle: subtitle,
+    );
+
+    return new ParsedResponse(response.statusCode, book);
+  }
+
   Future updateBook(Book book) async {
     database.updateBook(book);
   }

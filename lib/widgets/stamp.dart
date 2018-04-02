@@ -42,8 +42,6 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
 
 
-   // var card_width = 300.0 - widget.size;
-   // var card_height = 380.0 - widget.size;
     var width  = widget.width;
     var height = widget.width * widget.aspectRatio;
 

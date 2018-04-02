@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/pages/collection_page.dart';
+import 'package:test_app/pages/universal/collection_page.dart';
 import 'package:test_app/pages/formal/stamp_collection_page_formal.dart';
 import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/pages/material/search_book_page_material.dart';

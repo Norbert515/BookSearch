@@ -73,7 +73,7 @@ class _CollectionPreviewState extends State<CollectionPreview> {
                 scrollDirection: Axis.horizontal,
                 children: books.map((book)=>new Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: new Stamp(book.url, width: 100.0,),
+                  child: new Stamp(book.url, width: 100.0, locked: true,),
                 )).toList()
               ),
             ),

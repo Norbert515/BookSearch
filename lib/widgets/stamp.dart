@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Stamp extends StatefulWidget {
 
 
-  Stamp(this.imageUrl, {this.width = 150.0});
+  Stamp(this.imageUrl, {this.width = 150.0, this.locked = false});
 
   final bool withStartAnimation = false;
   final String imageUrl;
@@ -14,6 +14,8 @@ class Stamp extends StatefulWidget {
   final double aspectRatio = 1.5333333;
 
   final double relativeHoleRadius = 1.0;
+
+  final bool locked;
 
   @override
   State<StatefulWidget> createState() => new _StampState();
@@ -29,6 +31,7 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 
   @override
   void initState() {
+    super.initState();
     animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
 
     animation  = new Tween(begin: 0.0, end: 4.0).animate(animationController);
@@ -47,7 +50,7 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 
     var holeRadius = widget.relativeHoleRadius * (width / 10.0);
 
-    return new Container(
+    Widget result =  new Container(
       child: new Center(
         child: new ConstrainedBox(
           constraints: new BoxConstraints.tight(new Size(width, height)),
@@ -61,6 +64,10 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
         ),
       ),
     );
+
+
+
+    return result;
 
   }
 
@@ -81,11 +88,21 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
       child: new Container(
         color: Colors.white,
         child: new Align(
-            alignment: Alignment.topCenter,
-            child: new Image.network(widget.imageUrl,
-              width: card_width,
-              height: card_height,
-              fit: BoxFit.cover,
+            alignment: Alignment.center,
+            child: new Stack(
+              children: <Widget>[
+                new Image.network(widget.imageUrl,
+                  width: card_width,
+                  height: card_height,
+                  fit: BoxFit.cover,
+                ),
+                new Container(
+                  color: const Color(0xdd000000),
+                  width: card_width,
+                  height: card_height,
+                ),
+                new Align(alignment: Alignment.center,child: new Icon(Icons.lock, color: Colors.white,))
+              ],
             )
         ),
       ),

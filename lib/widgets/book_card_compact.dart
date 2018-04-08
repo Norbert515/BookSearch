@@ -31,7 +31,7 @@ class BookCardCompact extends StatelessWidget {
                       child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          new Text(_short(book.title, 35), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0),),
+                          new Text(book.title, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0), overflow: TextOverflow.ellipsis, maxLines: 2,),
                           new SizedBox(height: 4.0,),
                           new Text(book.author),
                        //   new SizedBox(height: 8.0,),

@@ -42,10 +42,10 @@ class _HomePageState extends State<HomePage> {
           new FutureBuilder<List<Book>>(
             future: Repository.get().getFavoriteBooks(),
             builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
-              if(snapshot.data == null) return new Container();
+              if(snapshot.data == null || snapshot.data.isEmpty) return new Container();
               return new CollectionPreview(
                 //TODO redundant, image url already fetched
-                bookIds: snapshot.data.map((book)=>book.id).toList(),
+                books: snapshot.data,
                 color: new Color(0xff8FC0A9),
                 title: "My Collection",
               );
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           ),
           new CollectionPreview(
             bookIds: ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"],
-            color: new Color(0xff4F518C),
+            color: new Color(0xff3B5249),
             title: "Biographies",
           ),
           new Center(

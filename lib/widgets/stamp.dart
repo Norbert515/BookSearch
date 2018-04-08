@@ -83,6 +83,27 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
   }
 
   Widget _clippedNetwork(BuildContext context, double card_width, double card_height, double holeRadius) {
+    List<Widget> stackChildren = [];
+
+    stackChildren.add(
+        new Image.network(widget.imageUrl,
+          width: card_width,
+          height: card_height,
+          fit: BoxFit.cover,
+    ));
+
+    if(widget.locked) {
+      stackChildren.add(
+          new Container(
+            color: const Color(0xbb000000),
+            width: card_width,
+            height: card_height,
+          ));
+      stackChildren.add(new Align(alignment: Alignment.center,child: new Icon(Icons.lock, color: Colors.white,)));
+    }
+
+
+
     return new ClipPath(
       clipper: new StampClipper(holeRadii: holeRadius),
       child: new Container(
@@ -90,19 +111,7 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
         child: new Align(
             alignment: Alignment.center,
             child: new Stack(
-              children: <Widget>[
-                new Image.network(widget.imageUrl,
-                  width: card_width,
-                  height: card_height,
-                  fit: BoxFit.cover,
-                ),
-                new Container(
-                  color: const Color(0xdd000000),
-                  width: card_width,
-                  height: card_height,
-                ),
-                new Align(alignment: Alignment.center,child: new Icon(Icons.lock, color: Colors.white,))
-              ],
+              children: stackChildren
             )
         ),
       ),

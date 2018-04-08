@@ -86,6 +86,7 @@ class Repository {
       networkBooks[book.id] = book;
     }
 
+    //Adds information (if available) from database
     List<Book> databaseBook = await database.getBooks([]..addAll(networkBooks.keys));
     for(Book book in databaseBook) {
       networkBooks[book.id] = book;
@@ -129,6 +130,12 @@ class Repository {
       description: description,
       subtitle: subtitle,
     );
+
+    //Adds information (if available) from database
+    List<Book> databaseBook = await database.getBooks([]..add(book.id));
+    for(Book databaseBook in databaseBook) {
+      book = databaseBook;
+    }
 
     return new ParsedResponse(response.statusCode, book);
   }

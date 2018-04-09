@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Stamp extends StatefulWidget {
 
 
-  Stamp(this.imageUrl, {this.width = 150.0, this.locked = false});
+  Stamp(this.imageUrl, {this.width = 150.0, this.locked = false, this.onClick});
 
   final bool withStartAnimation = false;
   final String imageUrl;
@@ -16,6 +16,8 @@ class Stamp extends StatefulWidget {
   final double relativeHoleRadius = 1.0;
 
   final bool locked;
+
+  final VoidCallback onClick;
 
   @override
   State<StatefulWidget> createState() => new _StampState();
@@ -50,15 +52,18 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 
     var holeRadius = widget.relativeHoleRadius * (width / 10.0);
 
-    Widget result =  new Container(
-      child: new Center(
-        child: new ConstrainedBox(
-          constraints: new BoxConstraints.tight(new Size(width, height)),
-          child: new Material(
-            elevation: 8.0,
-            color: Colors.transparent,
-            child: new Center(
-              child: _clippedNetwork(context, width, height, holeRadius),
+    Widget result =  new GestureDetector(
+      onTap: widget.onClick,
+      child: new Container(
+        child: new Center(
+          child: new ConstrainedBox(
+            constraints: new BoxConstraints.tight(new Size(width, height)),
+            child: new Material(
+              elevation: 8.0,
+              color: Colors.transparent,
+              child: new Center(
+                child: _clippedNetwork(context, width, height, holeRadius),
+              ),
             ),
           ),
         ),

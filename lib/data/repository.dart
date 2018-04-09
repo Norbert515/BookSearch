@@ -142,9 +142,12 @@ class Repository {
 
   Future updateBook(Book book) async {
     database.updateBook(book);
+    var books = await getFavoriteBooks();
+    controller.add(books);
   }
 
   Future close() async {
+    controller.close();
     return database.close();
   }
 
@@ -152,11 +155,20 @@ class Repository {
 
 
 
-  Future<List<Book>> getFavoriteBooks() {
+  Future<List<Book>> getFavoriteBooks()  {
     return database.getFavoriteBooks();
   }
 
 
+  StreamController<List<Book>> controller;
+
+  Stream<List<Book>> getFavoriteBooksStream() {
+    controller = new StreamController();
+    getFavoriteBooks().then((books) {
+      controller.add(books);
+    });
+    return controller.stream;
+  }
 
 
 }

@@ -21,10 +21,12 @@ class BookDetailsPageFormal extends StatefulWidget {
 
 class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetailsPageFormal> {
 
+  GlobalKey<ScaffoldState> key = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: key,
       appBar: new AppBar(
         title: new Text("Stamp Collection"),
         backgroundColor: Colors.white,
@@ -63,7 +65,10 @@ class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetai
                   ),
                   new Expanded(
                     child: new IconButtonText(
-                      onClick: (){},
+                      onClick: (){
+                        print("The id is: ${widget.book.id}");
+                        key.currentState.showSnackBar(new SnackBar(content: new Text("The id is: ${widget.book.id}")));
+                      },
                       iconData: Icons.bookmark,
                       text: "Bookmark",
                       selected: false,

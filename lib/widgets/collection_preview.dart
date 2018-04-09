@@ -5,6 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/model/Book.dart';
+import 'package:test_app/pages/formal/book_details_page_formal.dart';
+import 'package:test_app/utils/utils.dart';
 import 'package:test_app/widgets/stamp.dart';
 
 
@@ -86,7 +88,13 @@ class _CollectionPreviewState extends State<CollectionPreview> {
                     scrollDirection: Axis.horizontal,
                     children: books.map((book)=>new Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: new Stamp(book.url, width: 100.0, locked: !book.starred,),
+                      child: new Stamp(book.url, width: 100.0, locked: !book.starred, onClick: (){
+                        Navigator.of(context).push(
+                            new FadeRoute(
+                              builder: (BuildContext context) => new BookDetailsPageFormal(book),
+                              settings: new RouteSettings(name: '/book_detais_formal', isInitialRoute: false),
+                            ));
+                      },),
                     )).toList()
                   ),
                 ),

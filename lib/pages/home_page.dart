@@ -39,8 +39,8 @@ class _HomePageState extends State<HomePage> {
       body: new ListView(
 
         children: <Widget>[
-          new FutureBuilder<List<Book>>(
-            future: Repository.get().getFavoriteBooks(),
+          new StreamBuilder<List<Book>>(
+            stream: Repository.get().getFavoriteBooksStream(),
             builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
               if(snapshot.data == null || snapshot.data.isEmpty) return new Container();
               return new CollectionPreview(

@@ -14,7 +14,6 @@ import 'package:test_app/widgets/stamp.dart';
 class CollectionPreview extends StatefulWidget {
 
 
-  final List<String> bookIds;
 
   final List<Book> books;
 
@@ -23,8 +22,9 @@ class CollectionPreview extends StatefulWidget {
   final String title;
 
 
+  final bool loading;
 
-  CollectionPreview({this.bookIds, this.color = Colors.white, @required this.title, this.books});
+  CollectionPreview({this.color = Colors.white, @required this.title, this.books, this.loading = false});
 
   @override
   State<StatefulWidget> createState() => new _CollectionPreviewState();
@@ -36,31 +36,6 @@ class _CollectionPreviewState extends State<CollectionPreview> {
 
 
 
-  List<Book> books;
-
-
-  @override
-  void initState(){
-    super.initState();
-    if(widget.books == null) {
-      assert(widget.bookIds != null);
-      books = [];
-      _fetchBooks().then((it) {
-        setState(() {});
-      });
-    } else {
-      books = widget.books;
-    }
-
-  }
-
-  Future _fetchBooks() async{
-    var repository = Repository.get();
-    for(String id in widget.bookIds) {
-      ParsedResponse response = await repository.getBook(id);
-      books.add(response.body);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,21 +57,26 @@ class _CollectionPreviewState extends State<CollectionPreview> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 new Text(widget.title, style: textStyle,),
-                new SizedBox(
-                  height: 200.0,
-                  child: new ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: books.map((book)=>new Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: new Stamp(book.url, width: 100.0, locked: !book.starred, onClick: (){
-                        Navigator.of(context).push(
-                            new FadeRoute(
-                              builder: (BuildContext context) => new BookDetailsPageFormal(book),
-                              settings: new RouteSettings(name: '/book_detais_formal', isInitialRoute: false),
-                            ));
-                      },),
-                    )).toList()
-                  ),
+                new Stack(
+                  children: <Widget>[
+                    new SizedBox(
+                      height: 200.0,
+                      child: new ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: widget.books.map((book)=>new Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: new Stamp(book.url, width: 100.0, locked: !book.starred, onClick: (){
+                            Navigator.of(context).push(
+                                new FadeRoute(
+                                  builder: (BuildContext context) => new BookDetailsPageFormal(book),
+                                  settings: new RouteSettings(name: '/book_detais_formal', isInitialRoute: false),
+                                ));
+                          },),
+                        )).toList()
+                      ),
+                    ),
+                    widget.loading ? new Center(child: new CircularProgressIndicator(),): new Container()
+                  ],
                 ),
               ],
             )

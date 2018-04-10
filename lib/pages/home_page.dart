@@ -39,28 +39,46 @@ class _HomePageState extends State<HomePage> {
       body: new ListView(
 
         children: <Widget>[
-          new StreamBuilder<List<Book>>(
-            stream: Repository.get().getFavoriteBooksStream(),
+          new FutureBuilder<List<Book>>(
+            future: Repository.get().getFavoriteBooks(),
             builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
-              if(snapshot.data == null || snapshot.data.isEmpty) return new Container();
+              List<Book> books = [];
+              if(snapshot.data != null) books = snapshot.data;
               return new CollectionPreview(
                 //TODO redundant, image url already fetched
-                books: snapshot.data,
+                books: books,
                 color: new Color(0xff8FC0A9),
                 title: "My Collection",
+                loading: snapshot.data == null,
               );
             },
           ),
-          new CollectionPreview(
-            bookIds: ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"],
-            color: new Color(0xff4F518C),
-            title: "Biographies",
+          new FutureBuilder<List<Book>>(
+            future: Repository.get().getBooksById(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]),
+            builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+              List<Book> books = [];
+              if(snapshot.data != null) books = snapshot.data;
+              return new CollectionPreview(
+                books: books,
+                color: new Color(0xff4F518C),
+                title: "Biographies",
+                loading: snapshot.data == null,
+              );
+            },
           ),
-          new CollectionPreview(
-            bookIds: ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"],
-            color: new Color(0xff3B5249),
-            title: "Biographies",
-          ),
+       /*   new FutureBuilder<List<Book>>(
+            future: Repository.get().getBooksById(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]),
+            builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+              List<Book> books = [];
+              if(snapshot.data != null) books = snapshot.data;
+              return new CollectionPreview(
+                books: books,
+                color: new Color(0xff4F518C),
+                title: "Biographies",
+                loading: snapshot.data == null,
+              );
+            },
+          ),*/
           new Center(
             child: new Switch(value: interfaceType != "formal", onChanged: (bool){
               setState((){

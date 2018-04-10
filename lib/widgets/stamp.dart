@@ -27,18 +27,18 @@ class Stamp extends StatefulWidget {
 
 class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 
-  AnimationController animationController;
+//  AnimationController animationController;
   Animation animation;
 
 
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
+  //  animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
 
-    animation  = new Tween(begin: 0.0, end: 4.0).animate(animationController);
+ //   animation  = new Tween(begin: 0.0, end: 4.0).animate(animationController);
 
-    animationController.forward();
+ //   animationController.forward();
 
   }
 
@@ -159,6 +159,11 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
     );
   }
 
+  @override
+  void dispose() {
+
+    super.dispose();
+  }
 
 
 }

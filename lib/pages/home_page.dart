@@ -66,19 +66,6 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-       /*   new FutureBuilder<List<Book>>(
-            future: Repository.get().getBooksById(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]),
-            builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
-              List<Book> books = [];
-              if(snapshot.data != null) books = snapshot.data;
-              return new CollectionPreview(
-                books: books,
-                color: new Color(0xff4F518C),
-                title: "Biographies",
-                loading: snapshot.data == null,
-              );
-            },
-          ),*/
           new Center(
             child: new Switch(value: interfaceType != "formal", onChanged: (bool){
               setState((){

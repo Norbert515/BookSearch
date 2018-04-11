@@ -24,6 +24,18 @@ class _HomePageState extends State<HomePage> {
 
   String interfaceType = "formal";
 
+
+  List<Book> firstRec = [];
+  @override
+  void initState() {
+    super.initState();
+    Repository.get().getBooksById(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]).then((it){
+   //   setState((){
+    //    firstRec = it;
+   //   });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

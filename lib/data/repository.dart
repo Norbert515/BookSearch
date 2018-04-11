@@ -92,7 +92,9 @@ class Repository {
     //Adds information (if available) from database
     List<Book> databaseBook = await database.getBooks([]..add(book.id));
     for(Book databaseBook in databaseBook) {
-      book = databaseBook;
+      if(databaseBook != null) {
+        book = databaseBook;
+      }
     }
 
     return new ParsedResponse(response.statusCode, book);

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/model/Book.dart';
+import 'package:test_app/redux/app_state.dart';
 import 'package:test_app/utils/index_offset_curve.dart';
 import 'package:test_app/widgets/collection_preview.dart';
 import 'package:test_app/widgets/stamp.dart';
@@ -61,7 +64,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         children: <Widget>[
           new FadeTransition(
             opacity: new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(0)),
-            child: new FutureBuilder<List<Book>>(
+          /* child: new StoreConnector<AppState, List<Book>>(
+             converter: (Store<AppState> store) => store.state.readBooks,
+             builder: (BuildContext context, List<Book> books) {
+               return new CollectionPreview(
+                 books: books,
+                 color: new Color(0xff8FC0A9),
+                 title: "My Collection",
+                 loading: false,
+               );
+             },
+           ),*/
+           child: new FutureBuilder<List<Book>>(
               future: Repository.get().getFavoriteBooks(),
               builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
                 List<Book> books = [];

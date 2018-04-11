@@ -67,7 +67,7 @@ class BookDatabase {
     // Building SELECT * FROM TABLE WHERE ID IN (id1, id2, ..., idn)
     var idsString = ids.map((it) => '"$it"').join(',');
     var result = await db.rawQuery('SELECT * FROM $tableName WHERE ${Book.db_id} IN ($idsString)');
-    var books = [];
+    List<Book> books = [];
     for(Map<String, dynamic> item in result) {
       books.add(new Book.fromMap(item));
     }

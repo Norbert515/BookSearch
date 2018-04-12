@@ -79,7 +79,7 @@ class BookDatabase {
     var db = await _getDb();
     var result = await db.rawQuery('SELECT * FROM $tableName WHERE ${Book.db_star} = "1"');
     if(result.length == 0)return [];
-    var books = [];
+    List<Book> books = [];
     for(Map<String,dynamic> map in result) {
       books.add(new Book.fromMap(map));
     }

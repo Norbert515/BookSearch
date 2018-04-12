@@ -123,6 +123,43 @@ class Repository {
   //  return new ParsedResponse(statusCode, books);
   }
 
+  Future<List<Book>> getBooksByIdFirstFromDatabaseAndCache(List<String> ids) async {
+    List<Book> books = [];
+    List<String> idsToFetch = ids;
+
+    List<Book> databaseBook = await database.getBooks([]..addAll(ids));
+
+
+    for(Book databaseBook in databaseBook) {
+      books.add(databaseBook);
+      idsToFetch.remove(databaseBook.id);
+    }
+
+
+    for(String id in idsToFetch) {
+      http.Response response = await http.get("https://www.googleapis.com/books/v1/volumes/$id")
+          .catchError((resp) {});
+    /*  if(response == null) {
+        return new ParsedResponse(NO_INTERNET, null);
+      }
+
+      //If there was an error return null
+      if(response.statusCode < 200 || response.statusCode >= 300) {
+        return new ParsedResponse(response.statusCode, null);
+      }*/
+
+      dynamic jsonBook = JSON.decode(response.body);
+
+      Book book = parseNetworkBook(jsonBook);
+      updateBook(book);
+      books.add(book);
+    }
+
+    return books;
+
+
+  }
+
   Book parseNetworkBook(jsonBook) {
 
     Map volumeInfo = jsonBook["volumeInfo"];

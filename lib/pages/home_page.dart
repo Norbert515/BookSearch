@@ -12,11 +12,6 @@ import 'package:test_app/widgets/stamp.dart';
 
 class HomePage extends StatefulWidget {
 
-
-
-
-
-
   @override
   State<StatefulWidget> createState() => new _HomePageState();
 }
@@ -62,50 +57,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       body: new ListView(
 
         children: <Widget>[
-          new FadeTransition(
-            opacity: new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(0)),
-          /* child: new StoreConnector<AppState, List<Book>>(
-             converter: (Store<AppState> store) => store.state.readBooks,
-             builder: (BuildContext context, List<Book> books) {
-               return new CollectionPreview(
-                 books: books,
-                 color: new Color(0xff8FC0A9),
-                 title: "My Collection",
-                 loading: false,
-               );
-             },
-           ),*/
-           child: new FutureBuilder<List<Book>>(
-              future: Repository.get().getFavoriteBooks(),
-              builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
-                List<Book> books = [];
-                if(snapshot.data != null) books = snapshot.data;
-                return new CollectionPreview(
-                  //TODO redundant, image url already fetched
-                  books: books,
-                  color: new Color(0xff8FC0A9),
-                  title: "My Collection",
-                  loading: snapshot.data == null,
-                );
-              },
-            ),
-          ),
-          new FadeTransition(
-            opacity: new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(1)),
-            child: new FutureBuilder<List<Book>>(
-              future: Repository.get().getBooksById(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]),
-              builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
-                List<Book> books = [];
-                if(snapshot.data != null) books = snapshot.data;
-                return new CollectionPreview(
-                  books: books,
-                  color: new Color(0xff4F518C),
-                  title: "Biographies",
-                  loading: snapshot.data == null,
-                );
-              },
-            ),
-          ),
+          wrapInAnimation(myCollection(), 0),
+          wrapInAnimation(collectionPreview(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 1),
+          wrapInAnimation(collectionPreview(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
+          wrapInAnimation(collectionPreview(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
           new Center(
             child: new Switch(value: interfaceType != "formal", onChanged: (bool){
               setState((){
@@ -122,4 +77,61 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
+
+  /* child: new StoreConnector<AppState, List<Book>>(
+             converter: (Store<AppState> store) => store.state.readBooks,
+             builder: (BuildContext context, List<Book> books) {
+               return new CollectionPreview(
+                 books: books,
+                 color: new Color(0xff8FC0A9),
+                 title: "My Collection",
+                 loading: false,
+               );
+             },
+           ),*/
+
+  Widget wrapInAnimation(Widget child, int index) {
+    return new SlideTransition(
+        position: Tween<Offset>(begin: new Offset(0.0, 0.5), end: new Offset(0.0, 0.0)).animate(new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index + 1))),
+        child: new FadeTransition(
+          opacity: new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(1)),
+          child: child,
+        )
+    );
+  }
+
+
+  Widget collectionPreview(List<String> ids) {
+    return new FutureBuilder<List<Book>>(
+      future: Repository.get().getBooksByIdFirstFromDatabaseAndCache(ids),
+      builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+        List<Book> books = [];
+        if(snapshot.data != null) books = snapshot.data;
+        return new CollectionPreview(
+          books: books,
+          color: new Color(0xff4F518C),
+          title: "Biographies",
+          loading: snapshot.data == null,
+        );
+      },
+    );
+  }
+
+
+  Widget myCollection() {
+    return new FutureBuilder<List<Book>>(
+      future: Repository.get().getFavoriteBooks(),
+      builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
+        List<Book> books = [];
+        if(snapshot.data != null) books = snapshot.data;
+        return new CollectionPreview(
+          //TODO redundant, image url already fetched
+          books: books,
+          color: new Color(0xff8FC0A9),
+          title: "My Collection",
+          loading: snapshot.data == null,
+        );
+      },
+    );
+  }
 }

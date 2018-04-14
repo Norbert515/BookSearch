@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/model/Book.dart';
@@ -67,7 +68,8 @@ class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetai
                     child: new IconButtonText(
                       onClick: (){
                         print("The id is: ${widget.book.id}");
-                        key.currentState.showSnackBar(new SnackBar(content: new Text("The id is: ${widget.book.id}")));
+                        Clipboard.setData(new ClipboardData(text: widget.book.id));
+                        key.currentState.showSnackBar(new SnackBar(content: new Text("Copied: \"${widget.book.id}\" to clipboard")));
                       },
                       iconData: Icons.bookmark,
                       text: "Bookmark",

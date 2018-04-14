@@ -28,6 +28,9 @@ class BookDatabase {
     return db;
   }
 
+  Future init() async {
+    return await _init();
+  }
 
   Future _init() async {
     // Get a location using path_provider

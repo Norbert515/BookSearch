@@ -36,6 +36,9 @@ class Repository {
     database = BookDatabase.get();
   }
 
+  Future init() async{
+    return await database.init();
+  }
 
   /// Fetches the books from the Google Books Api with the query parameter being input.
   /// If a book also exists in the local storage (eg. a book with notes/ stars) that version of the book will be used instead
@@ -177,7 +180,7 @@ class Repository {
     }
     return new Book(
       title: jsonBook["volumeInfo"]["title"],
-      url: jsonBook["volumeInfo"]["imageLinks"]["smallThumbnail"],
+      url: jsonBook["volumeInfo"]["imageLinks"] != null? jsonBook["volumeInfo"]["imageLinks"]["smallThumbnail"]: "",
       id: jsonBook["id"],
       //only first author
       author: author,

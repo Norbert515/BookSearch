@@ -26,12 +26,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   String interfaceType = "formal";
 
+  bool init = true;
 
   @override
   void initState() {
     super.initState();
     cardsFirstOpenController = new AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
 
+    Repository.get().init().then((it){
+      setState((){
+        init = false;
+      });
+    });
     cardsFirstOpenController.forward(from: 0.2);
   }
 
@@ -45,33 +51,41 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search_$interfaceType');},),
-          new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/stamp_collection_$interfaceType');},),
-        ],
-        backgroundColor: Colors.white,
-        elevation: 1.0,
-        iconTheme: new IconThemeData(color: Colors.black),
-      ),
-      body: new ListView(
-
-        children: <Widget>[
-          wrapInAnimation(myCollection(), 0),
-          wrapInAnimation(collectionPreview(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 1),
-          wrapInAnimation(collectionPreview(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
-          wrapInAnimation(collectionPreview(["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
-          new Center(
-            child: new Switch(value: interfaceType != "formal", onChanged: (bool){
-              setState((){
-                if(bool) {
-                  interfaceType = "material";
-                } else {
-                  interfaceType = "formal";
-                }
-              });
-            }),
+      body: init? new Container(): new CustomScrollView(
+        slivers: <Widget>[
+          new SliverAppBar(
+            actions: <Widget>[
+              new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search_$interfaceType');},),
+              new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/stamp_collection_$interfaceType');},),
+            ],
+            backgroundColor: new Color(0x44ffffff),
+            elevation: 1.0,
+            iconTheme: new IconThemeData(color: Colors.black),
+            floating: true,
+            snap: true,
           ),
+          new SliverList(delegate: new SliverChildListDelegate(
+            [
+              wrapInAnimation(myCollection(), 0),
+              wrapInAnimation(collectionPreview(new Color(0xff5F82BD), ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
+              wrapInAnimation(collectionPreview(new Color(0xffC88379),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
+              wrapInAnimation(collectionPreview(new Color(0xffC8C28A),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
+              new Center(
+                child: new Switch(value: interfaceType != "formal", onChanged: (bool){
+                  setState((){
+                    if(bool) {
+                      interfaceType = "material";
+                    } else {
+                      interfaceType = "formal";
+                    }
+                  });
+                }),
+              ),
+              new Center(
+                child: new Text("Magic Switch, press for different style", style: const TextStyle(fontSize: 18.0),),
+              ),
+            ],
+          ))
         ],
       )
     );
@@ -92,7 +106,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Widget wrapInAnimation(Widget child, int index) {
     return new SlideTransition(
-        position: Tween<Offset>(begin: new Offset(0.0, 0.5), end: new Offset(0.0, 0.0)).animate(new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index + 1))),
+        position: new Tween<Offset>(begin: new Offset(0.0, 0.5), end: new Offset(0.0, 0.0)).animate(new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index + 1))),
         child: new FadeTransition(
           opacity: new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(1)),
           child: child,
@@ -101,7 +115,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
 
-  Widget collectionPreview(List<String> ids) {
+  Widget collectionPreview(Color color, List<String> ids) {
     return new FutureBuilder<List<Book>>(
       future: Repository.get().getBooksByIdFirstFromDatabaseAndCache(ids),
       builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
@@ -109,7 +123,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         if(snapshot.data != null) books = snapshot.data;
         return new CollectionPreview(
           books: books,
-          color: new Color(0xff4F518C),
+          color: color,
           title: "Biographies",
           loading: snapshot.data == null,
         );
@@ -127,7 +141,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         return new CollectionPreview(
           //TODO redundant, image url already fetched
           books: books,
-          color: new Color(0xff8FC0A9),
+          color: new Color(0xffBD708D),
           title: "My Collection",
           loading: snapshot.data == null,
         );

@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+
     return new Scaffold(
       body: init? new Container(): new CustomScrollView(
         slivers: <Widget>[
@@ -105,10 +106,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
            ),*/
 
   Widget wrapInAnimation(Widget child, int index) {
+    //TODO replace IndexOffsetCurve
+    Animation offsetAnimation = new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index + 1, delay: 0.2));
+    Animation fade = new CurvedAnimation(parent: offsetAnimation, curve: Curves.decelerate);
     return new SlideTransition(
-        position: new Tween<Offset>(begin: new Offset(0.0, 0.5), end: new Offset(0.0, 0.0)).animate(new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index + 1))),
+        position: new Tween<Offset>(begin: new Offset(0.5, 0.0), end: new Offset(0.0, 0.0)).animate(fade),
         child: new FadeTransition(
-          opacity: new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(1)),
+          opacity: fade,
           child: child,
         )
     );

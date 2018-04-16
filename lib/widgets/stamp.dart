@@ -110,7 +110,7 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 
 
     return new ClipPath(
-      clipper: new StampClipper(holeRadii: holeRadius),
+      clipper: new StampClipper(holeRadius: holeRadius),
       child: new Container(
         color: Colors.white,
         child: new Align(
@@ -171,22 +171,22 @@ class _StampState extends State<Stamp> with SingleTickerProviderStateMixin{
 class StampClipper extends CustomClipper<Path> {
 
 
-  StampClipper({this.holeRadii = 15.0});
+  StampClipper({this.holeRadius = 15.0});
 
 
-  final holeRadii;
+  final holeRadius;
 
   @override
   Path getClip(Size size) {
     Path path = new Path();
 
-    int num = (size.width / holeRadii).round();
+    int num = (size.width / holeRadius).round();
 
     double radius;
     if(num % 2 == 0) {
       num++;
-      radius = size.width / num;
     }
+    radius = size.width / num;
 
     for(int i = 0; i < num / 2 - 1; i++) {
       path.relativeLineTo(radius, 0.0);
@@ -223,6 +223,6 @@ class StampClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return holeRadii != holeRadii;
+    return holeRadius != holeRadius;
   }
 }

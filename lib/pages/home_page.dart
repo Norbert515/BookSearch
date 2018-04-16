@@ -58,18 +58,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               new IconButton(icon: new Icon(Icons.search), onPressed: () {Navigator.pushNamed(context, '/search_$interfaceType');},),
               new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/stamp_collection_$interfaceType');},),
             ],
-            backgroundColor: new Color(0x44ffffff),
+            backgroundColor: new Color(0xddffffff),
             elevation: 1.0,
             iconTheme: new IconThemeData(color: Colors.black),
             floating: true,
-            snap: true,
+            snap: false,
           ),
           new SliverList(delegate: new SliverChildListDelegate(
             [
               wrapInAnimation(myCollection(), 0),
-              wrapInAnimation(collectionPreview(new Color(0xff5F82BD), ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
-              wrapInAnimation(collectionPreview(new Color(0xffC88379),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
-              wrapInAnimation(collectionPreview(new Color(0xffC8C28A),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
+              wrapInAnimation(collectionPreview(new Color(0xff7CAAF7), ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
+              wrapInAnimation(collectionPreview(new Color(0xffFAA497),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
+              wrapInAnimation(collectionPreview(new Color(0xffFAF2AC),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
               new Center(
                 child: new Switch(value: interfaceType != "formal", onChanged: (bool){
                   setState((){
@@ -139,9 +139,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         List<Book> books = [];
         if(snapshot.data != null) books = snapshot.data;
         return new CollectionPreview(
-          //TODO redundant, image url already fetched
           books: books,
-          color: new Color(0xffBD708D),
+          color: new Color(0xffFC96BC),
           title: "My Collection",
           loading: snapshot.data == null,
         );

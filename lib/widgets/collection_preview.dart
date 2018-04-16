@@ -56,6 +56,7 @@ class _CollectionPreviewState extends State<CollectionPreview> {
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                new Divider(color: Colors.black,),
                 new Text(widget.title, style: textStyle,),
                 new Stack(
                   children: <Widget>[
@@ -75,7 +76,7 @@ class _CollectionPreviewState extends State<CollectionPreview> {
                         )).toList()
                       ),
                     ),
-                    widget.loading ? new Center(child: new CircularProgressIndicator(),): new Container()
+                    widget.loading ? new Center(child: new CircularProgressIndicator(),): new Container(),
                   ],
                 ),
               ],

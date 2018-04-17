@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    cardsFirstOpenController = new AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+    cardsFirstOpenController = new AnimationController(vsync: this, duration: const Duration(milliseconds: 1300));
 
     Repository.get().init().then((it){
       setState((){
@@ -60,17 +60,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               new IconButton(icon: new Icon(Icons.collections), onPressed: () {Navigator.pushNamed(context, '/stamp_collection_$interfaceType');},),
             ],
             backgroundColor: new Color(0xddffffff),
-            elevation: 1.0,
+            elevation: 2.0,
             iconTheme: new IconThemeData(color: Colors.black),
-            floating: true,
-            snap: false,
           ),
           new SliverList(delegate: new SliverChildListDelegate(
             [
               wrapInAnimation(myCollection(), 0),
-              wrapInAnimation(collectionPreview(new Color(0xff7CAAF7), ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
-              wrapInAnimation(collectionPreview(new Color(0xffFAA497),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
-              wrapInAnimation(collectionPreview(new Color(0xffFAF2AC),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff), ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
               new Center(
                 child: new Switch(value: interfaceType != "formal", onChanged: (bool){
                   setState((){
@@ -107,8 +105,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Widget wrapInAnimation(Widget child, int index) {
     //TODO replace IndexOffsetCurve
-    Animation offsetAnimation = new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index + 1, delay: 0.2));
-    Animation fade = new CurvedAnimation(parent: offsetAnimation, curve: Curves.decelerate);
+    Animation offsetAnimation = new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index));
+  //  Animation offsetAnimation = new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetFractionCurve(index, 0.2, 0.5));
+    Animation fade = new CurvedAnimation(parent: offsetAnimation, curve: Curves.ease);
     return new SlideTransition(
         position: new Tween<Offset>(begin: new Offset(0.5, 0.0), end: new Offset(0.0, 0.0)).animate(fade),
         child: new FadeTransition(
@@ -142,9 +141,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
         List<Book> books = [];
         if(snapshot.data != null) books = snapshot.data;
+        if(books.isEmpty) {
+          return new Container();
+        }
         return new CollectionPreview(
           books: books,
-          color: new Color(0xffFC96BC),
+          //color: new Color(0xffFC96BC),
+          color: new Color(0xffffffff),
           title: "My Collection",
           loading: snapshot.data == null,
         );

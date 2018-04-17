@@ -104,7 +104,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
            ),*/
 
   Widget wrapInAnimation(Widget child, int index) {
-    //TODO replace IndexOffsetCurve
     Animation offsetAnimation = new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index));
     Animation fade = new CurvedAnimation(parent: offsetAnimation, curve: Curves.ease);
     return new SlideTransition(

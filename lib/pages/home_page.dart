@@ -66,9 +66,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           new SliverList(delegate: new SliverChildListDelegate(
             [
               wrapInAnimation(myCollection(), 0),
-              wrapInAnimation(collectionPreview(new Color(0xffffffff), ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
-              wrapInAnimation(collectionPreview(new Color(0xffffffff),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 2),
-              wrapInAnimation(collectionPreview(new Color(0xffffffff),["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ"]), 3),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff), "Biographies", ["wO3PCgAAQBAJ","_LFSBgAAQBAJ","8U2oAAAAQBAJ", "yG3PAK6ZOucC"]), 1),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff), "Fiction", ["OsUPDgAAQBAJ", "3e-dDAAAQBAJ", "-ITZDAAAQBAJ","rmBeDAAAQBAJ", "vgzJCwAAQBAJ"]), 3),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff), "Mystery & Thriller", ["1Y9gDQAAQBAJ", "Pz4YDQAAQBAJ", "UXARDgAAQBAJ"]), 3),
+              wrapInAnimation(collectionPreview(new Color(0xffffffff), "Sience Ficition", ["JMYUDAAAQBAJ","PzhQydl-QD8C", "nkalO3OsoeMC", "VO8nDwAAQBAJ", "Nxl0BQAAQBAJ"]), 2),
               new Center(
                 child: new Switch(value: interfaceType != "formal", onChanged: (bool){
                   setState((){
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
 
-  Widget collectionPreview(Color color, List<String> ids) {
+  Widget collectionPreview(Color color, String name, List<String> ids) {
     return new FutureBuilder<List<Book>>(
       future: Repository.get().getBooksByIdFirstFromDatabaseAndCache(ids),
       builder: (BuildContext context, AsyncSnapshot<List<Book>> snapshot) {
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         return new CollectionPreview(
           books: books,
           color: color,
-          title: "Biographies",
+          title: name,
           loading: snapshot.data == null,
         );
       },

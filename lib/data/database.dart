@@ -94,12 +94,12 @@ class BookDatabase {
   /// Inserts or replaces the book.
   Future updateBook(Book book) async {
     var db = await _getDb();
-    await db.inTransaction(() async {
-      await db.rawInsert(
-          'INSERT OR REPLACE INTO '
-              '$tableName(${Book.db_id}, ${Book.db_title}, ${Book.db_url}, ${Book.db_star}, ${Book.db_notes}, ${Book.db_author}, ${Book.db_description}, ${Book.db_subtitle})'
-              ' VALUES("${book.id}", "${book.title}", "${book.url}", ${book.starred? 1:0}, "${book.notes}", "${book.author}", "${book.description}", "${book.subtitle}")');
-    });
+    await db.rawInsert(
+        'INSERT OR REPLACE INTO '
+            '$tableName(${Book.db_id}, ${Book.db_title}, ${Book.db_url}, ${Book.db_star}, ${Book.db_notes}, ${Book.db_author}, ${Book.db_description}, ${Book.db_subtitle})'
+            ' VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
+        [book.id, book.title, book.url, book.starred? 1:0, book.notes, book.author, book.description, book.subtitle]);
+
   }
 
   Future close() async {

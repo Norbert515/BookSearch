@@ -7,11 +7,13 @@ I post updates and tutorial on this code on medium, go check it out!
 
 https://medium.com/@norbertkozsir 
 
-## Here are some gifs about the app
+## Here are some gifs
+
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/fade_in_myCollection_gif.gif)
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/search_gif.gif)
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/unlocking_gif.gif)
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/stamps.png)
+
 ### Sounds cool? Leave a star so others can also find this project!
 
 

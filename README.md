@@ -1,10 +1,18 @@
-# BookSearch
+# BookSearch a flutter medium series 
 
-A flutter medium series where I gradually a bookshelf app.
-What's the app going to look like?
-- I don't know. But my idea was to have a well designed app to track book reading progress and share with friends. 
+## What is this?
+An open source app which revolves all around books: “Collecting books as you read them, virtually”.
 
+I post updates and tutorial on this code on medium, go check it out!
 
+https://medium.com/@norbertkozsir 
+
+## Here are some gifs about the app
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/fade_in_myCollection_gif.gif)
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/search_gif.gif)
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/unlocking_gif.gif)
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/stamps.png)
+### Sounds cool? Leave a star so others can also find this project!
 
 
 
@@ -22,6 +30,9 @@ https://proandroiddev.com/flutter-bookshelf-app-part-2-personal-notes-and-databa
 
 
 
+### Old gifs
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/first.gif)
+![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/second.gif)
 
 ## Getting Started with flutter
 

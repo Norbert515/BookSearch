@@ -29,7 +29,8 @@ https://medium.com/@norbertkozsir/flutter-how-i-built-a-simple-app-in-under-an-h
 ## Second Post "v2"-branch
 https://proandroiddev.com/flutter-bookshelf-app-part-2-personal-notes-and-database-integration-a3b47a84c57
 
-
+## Third Post "v3"-branch
+https://proandroiddev.com/flutter-bookshelf-app-part-3-managing-data-the-right-way-30569abf9487
 
 
 ### Old gifs

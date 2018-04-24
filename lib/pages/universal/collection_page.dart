@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/model/Book.dart';
-import 'package:test_app/pages/book_notes_page.dart';
+import 'package:test_app/pages/universal/book_notes_page.dart';
 import 'package:test_app/utils/utils.dart';
 import 'package:test_app/widgets/BookCard.dart';
 

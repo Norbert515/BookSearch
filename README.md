@@ -21,15 +21,15 @@ https://medium.com/@norbertkozsir
 
 # Code for the medium posts:
 
-## -Master contains the newest code
+### Master contains the newest code
 
-## First Post "v1"-branch
+### First Post "v1"-branch
 https://medium.com/@norbertkozsir/flutter-how-i-built-a-simple-app-in-under-an-hour-from-scratch-and-how-you-can-do-it-too-6d8e7fe6c91b
 
-## Second Post "v2"-branch
+### Second Post "v2"-branch
 https://proandroiddev.com/flutter-bookshelf-app-part-2-personal-notes-and-database-integration-a3b47a84c57
 
-## Third Post "v3"-branch
+### Third Post "v3"-branch
 https://proandroiddev.com/flutter-bookshelf-app-part-3-managing-data-the-right-way-30569abf9487
 
 
@@ -37,7 +37,7 @@ https://proandroiddev.com/flutter-bookshelf-app-part-3-managing-data-the-right-w
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/first.gif)
 ![](https://github.com/Norbert515/BookSearch/blob/master/readmeAssets/second.gif)
 
-## Getting Started with flutter
+### Getting Started with flutter
 
 For help getting started with Flutter, view our online
 [documentation](http://flutter.io/).

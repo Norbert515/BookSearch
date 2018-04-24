@@ -19,9 +19,11 @@ https://medium.com/@norbertkozsir
 
 
 
+
 # Code for the medium posts:
 
 ### Master contains the newest code
+
 
 ### First Post "v1"-branch
 https://medium.com/@norbertkozsir/flutter-how-i-built-a-simple-app-in-under-an-hour-from-scratch-and-how-you-can-do-it-too-6d8e7fe6c91b
@@ -31,6 +33,7 @@ https://proandroiddev.com/flutter-bookshelf-app-part-2-personal-notes-and-databa
 
 ### Third Post "v3"-branch
 https://proandroiddev.com/flutter-bookshelf-app-part-3-managing-data-the-right-way-30569abf9487
+
 
 
 ### Old gifs

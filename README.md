@@ -3,7 +3,7 @@
 ## What is this?
 An open source app which revolves all around books: “Collecting books as you read them, virtually”.
 
-I post updates and tutorial on this code on medium, go check it out!
+I post updates and tutorial on medium, go check it out!
 
 https://medium.com/@norbertkozsir 
 

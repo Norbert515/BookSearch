@@ -92,19 +92,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       )
     );
   }
-
-
-  /* child: new StoreConnector<AppState, List<Book>>(
-             converter: (Store<AppState> store) => store.state.readBooks,
-             builder: (BuildContext context, List<Book> books) {
-               return new CollectionPreview(
-                 books: books,
-                 color: new Color(0xff8FC0A9),
-                 title: "My Collection",
-                 loading: false,
-               );
-             },
-           ),*/
+  
 
   Widget wrapInAnimation(Widget child, int index) {
     Animation offsetAnimation = new CurvedAnimation(parent: cardsFirstOpenController, curve: new IndexOffsetCurve(index));

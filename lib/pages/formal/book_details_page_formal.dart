@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:test_app/data/repository.dart';
 import 'package:test_app/model/Book.dart';
-import 'package:test_app/pages/abstract/book_details_page_abstract.dart';
 
 
 
@@ -20,7 +19,7 @@ class BookDetailsPageFormal extends StatefulWidget {
 }
 
 
-class _BookDetailsPageFormalState extends AbstractBookDetailsPageState<BookDetailsPageFormal> {
+class _BookDetailsPageFormalState extends State<BookDetailsPageFormal> {
 
   GlobalKey<ScaffoldState> key = new GlobalKey();
 
@@ -109,7 +108,7 @@ class IconButtonText extends StatelessWidget {
 
 
 
-  IconButtonText({@required this.onClick, @required this.iconData, @required this.text, this.selected});
+  IconButtonText({@required this.onClick, @required this.iconData, @required this.text, this.selected = false});
 
 
   final VoidCallback onClick;
@@ -117,7 +116,7 @@ class IconButtonText extends StatelessWidget {
   final IconData iconData;
   final String text;
 
-  bool selected = false;
+  final bool selected;
 
   final Color selectedColor = new Color(0xff283593);
 

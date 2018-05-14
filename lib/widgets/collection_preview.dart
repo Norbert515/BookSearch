@@ -64,6 +64,7 @@ class _CollectionPreviewState extends State<CollectionPreview> {
                       height: 200.0,
                       child: new ListView(
                         scrollDirection: Axis.horizontal,
+                        physics: new BouncingScrollPhysics(),
                         children: widget.books.map((book)=>new Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: new Stamp(book.url, width: 100.0, locked: !book.starred, onClick: (){

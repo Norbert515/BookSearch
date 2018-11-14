@@ -58,7 +58,7 @@ class Repository {
        return new ParsedResponse(response.statusCode, []);
      }
      // Decode and go to the items part where the necessary book information is
-     List<dynamic> list = JSON.decode(response.body)['items'];
+     List<dynamic> list = jsonDecode(response.body)['items'];
 
      Map<String, Book> networkBooks = {};
 
@@ -88,7 +88,7 @@ class Repository {
       return new ParsedResponse(response.statusCode, null);
     }
 
-    dynamic jsonBook = JSON.decode(response.body);
+    dynamic jsonBook = jsonDecode(response.body);
 
     Book book = parseNetworkBook(jsonBook);
 
@@ -151,7 +151,7 @@ class Repository {
         return new ParsedResponse(response.statusCode, null);
       }*/
 
-      dynamic jsonBook = JSON.decode(response.body);
+      dynamic jsonBook = jsonDecode(response.body);
 
       Book book = parseNetworkBook(jsonBook);
       updateBook(book);

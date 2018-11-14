@@ -49,7 +49,7 @@ class _CollectionPreviewState extends State<CollectionPreview> {
         heightFactor: 0.7,
         alignment: Alignment.topCenter,
         child: new ConstrainedBox(
-          constraints: new BoxConstraints(minWidth: double.INFINITY, maxWidth: double.INFINITY, minHeight: 0.0, maxHeight: double.INFINITY),
+          constraints: new BoxConstraints(minWidth: double.infinity, maxWidth: double.infinity, minHeight: 0.0, maxHeight: double.infinity),
           child: new Container(
             padding: const EdgeInsets.all(8.0),
             color: widget.color,
